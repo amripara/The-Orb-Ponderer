@@ -2,10 +2,10 @@ Shader "Custom/VignetteBlur"
 {
     Properties
     {
-        _T("Time (0~1)", Range(0, 1)) = 0.5
-        _BlurStep("Blur Step", Int) = 3
-        _Period ("Period", Range(0, 3)) = 1
-        _Extent("Extent of Non-Blur", Range(0, 10)) = 2
+        _T("% Maximum Speed", Range(0, 1)) = 0.5
+        _BlurStep("Blur Step", Int) = 3 // the higher it is, the broader the box-blur samples, too large will cause fracturing images
+        _Period ("Period", Range(0, 1)) = 1 // the lower it is, the more radial "shards" appear on the edge of the screen
+        _Extent("Extent of Non-Blur", Range(0, 10)) = 2 // the higher it is, the larger the central, non-blurred area on the screen is
     }
 
     SubShader
@@ -78,9 +78,9 @@ Shader "Custom/VignetteBlur"
                 
                 float r = pow(length(input.uv - 0.5), _Extent);
 
-                float theta = atan2(input.uv.y - 0.5, input.uv.x - 0.5) + PI;
+                float theta = ( atan2(input.uv.y - 0.5, input.uv.x - 0.5) / PI + 1 ) / 2;
 
-                int theta_st = (theta / _Period) % 2;
+                float theta_st = sin((-4 * (theta) * (theta - 1)) / _Period + inoise(theta) * 5 * (theta - 1)) * 3;
 
                 float n = inoise(float3(cos(3 * theta), 40 * r, _T));
                 float theta_w = theta_st * r;
