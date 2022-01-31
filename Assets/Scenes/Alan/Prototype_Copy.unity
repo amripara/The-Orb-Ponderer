@@ -769,7 +769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &507732860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3358,8 +3358,8 @@ MonoBehaviour:
   fg0: 0.098
   manual_mode: 1
   manual_debug_vfx_t: 1
-  lerp_formula: 2
   mat: {fileID: 2100000, guid: b6f8c1166b481fc4b8d773f508eb491e, type: 2}
+  lerp_formula: 2
 --- !u!114 &1810581726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3389,6 +3389,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729aad4491e915a41bda2b8325cf757a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_FocusTracksTarget: 0
+  m_FocusTracking: 0
+  m_FocusTarget: {fileID: 0}
+  m_FocusOffset: 0
+  m_Profile: {fileID: 0}
 --- !u!1 &1823317671
 GameObject:
   m_ObjectHideFlags: 0
