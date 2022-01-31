@@ -102,6 +102,7 @@ public class PlayerCamPhys : MonoBehaviour
             fg.intensity.value = (1f - t) * fg0;
         }
 
+
         mat.SetFloat("_t", t);
     }
 

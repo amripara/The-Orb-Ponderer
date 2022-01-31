@@ -4,8 +4,7 @@ Shader "Custom/VignetteBlur"
     {
         _T("Time (0~1)", Range(0, 1)) = 0.5
         _BlurStep("Blur Step", Int) = 3
-        _BlurRad("Blur Radius", Int) = 5
-        _Period ("Period", Float) = 1
+        _Period ("Period", Range(0, 3)) = 1
         _Extent("Extent of Non-Blur", Range(0, 10)) = 2
     }
 
@@ -64,13 +63,11 @@ Shader "Custom/VignetteBlur"
             
             float2 _CameraOpaqueTexture_TexelSize;
 
-            float _Intensity;
             float _Period;
             float _T;
             float _Extent;
 
             int _BlurStep;
-            int _BlurRad;
 
             float hash(float n);
             float inoise(float3 x);
@@ -88,12 +85,12 @@ Shader "Custom/VignetteBlur"
                 float n = inoise(float3(cos(3 * theta), 40 * r, _T));
                 float theta_w = theta_st * r;
 
-                int d = (theta_w * _BlurStep + r) * _BlurRad;
+                int d = theta_w * _BlurStep + r;
 
                 float2 dx = float2(d * _CameraOpaqueTexture_TexelSize.x, 0);
                 float2 dy = float2(0, d * _CameraOpaqueTexture_TexelSize.y);
 
-                theta_w *= n * _T;
+                theta_w *= n;
 
                 // sample 9 points for box blur
                 // 00 10 20
@@ -111,12 +108,13 @@ Shader "Custom/VignetteBlur"
                     c12 = SAMPLE_TEXTURE2D_X(_CameraOpaqueTexture, sampler_CameraOpaqueTexture, input.uv + dy),
                     c22 = SAMPLE_TEXTURE2D_X(_CameraOpaqueTexture, sampler_CameraOpaqueTexture, input.uv + dx + dy);
 
-                float p = (1 - _Intensity) / 8;
-                float4 c = _Intensity * c11 + p * (c00 + c10 + c20 + c01 + c21 + c02 + c12 + c22);
+                float p = _T / 8;
+                float4 c = (1 - _T) * c11 + p * (c00 + c10 + c20 + c01 + c21 + c02 + c12 + c22);
 
                 return c;
             }
 
+            // 
             // hash based 3d value noise
             // function taken from https://www.shadertoy.com/view/XslGRr
             // Created by inigo quilez - iq/2013

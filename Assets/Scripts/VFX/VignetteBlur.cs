@@ -8,12 +8,7 @@ using UnityEngine.Rendering.Universal;
 [System.Serializable]
 [CreateAssetMenu(fileName = "Vignette Blur", menuName = "Custom Post Processing Passes/Vignette Blur")]
 public class VignetteBlur : ScriptableRendererFeature {
-    public Shader m_Shader;
-    public float m_Intensity;
-    public float m_Freq;
-    public float m_Extent;
-
-    Material m_Material;
+    public Material m_Material;
 
     VignetteBlitPass m_RenderPass = null;
 
@@ -23,16 +18,13 @@ public class VignetteBlur : ScriptableRendererFeature {
         {
             //Calling ConfigureInput with the ScriptableRenderPassInput.Color argument ensures that the opaque texture is available to the Render Pass
             m_RenderPass.ConfigureInput(ScriptableRenderPassInput.Color);
-            m_RenderPass.SetTarget(renderer.cameraColorTarget, m_Intensity, m_Freq, m_Extent);
+            m_RenderPass.SetTarget(renderer.cameraColorTarget);
             renderer.EnqueuePass(m_RenderPass);
         }
     }
 
     public override void Create()
     {
-        if (m_Shader != null)
-            m_Material = new Material(m_Shader);
-
         m_RenderPass = new VignetteBlitPass(m_Material);
     }
 
