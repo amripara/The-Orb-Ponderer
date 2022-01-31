@@ -32,6 +32,19 @@ public class PlayerController : MonoBehaviour
     private bool isTurning;
     private Quaternion toDirection;
     private Quaternion fromDirection;
+
+    // Exposed movement variables
+    public Vector3 velocity { get { return rb.velocity; } }
+    public float speed { get { return velocity.magnitude; } }
+
+    public static PlayerController Instance { get { return _instance; } }
+    private static PlayerController _instance;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
