@@ -103,7 +103,7 @@ public class PlayerCamPhys : MonoBehaviour
         }
 
 
-        mat.SetFloat("_t", t);
+        mat.SetFloat("_T", t);
     }
 
 }

@@ -3754,7 +3754,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -3864,12 +3864,12 @@ MonoBehaviour:
   max_v: 10.4
   cam: {fileID: 1810581723}
   cvs: {fileID: 1810581726}
-  ca0: 0.412
+  ca0: 0.628
   ld0: 0.064
   vi0: 0.186
-  fg0: 0.098
+  fg0: 0.061
   manual_mode: 1
-  manual_debug_vfx_t: 0.489
+  manual_debug_vfx_t: 1
   mat: {fileID: 2100000, guid: b6f8c1166b481fc4b8d773f508eb491e, type: 2}
   lerp_formula: 2
 --- !u!114 &1810581726
