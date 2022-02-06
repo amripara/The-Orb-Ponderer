@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     public GameObject winTextObject;
 
     //Death
-    public GameObject loseTextObject;
+    // public GameObject loseTextObject;
+    public GameObject deathController;
     private bool isDead = false;
 
     //Moving forward, jumping, sliding
@@ -52,7 +53,7 @@ public class PlayerController : MonoBehaviour
         capsule = GetComponent<CapsuleCollider>();
         count = 0;
         winTextObject.SetActive(false);
-        loseTextObject.SetActive(false);
+        // loseTextObject.SetActive(false);
         originalHeight = capsule.height;
     }
 
@@ -80,9 +81,10 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(Vector3.up * 5, ForceMode.VelocityChange);
                 grounded = false;
             }
-            if (transform.position.y < 0)
+            if (transform.position.y < 0) // NOTE: should be modified later to add more potential death scenarios
             {
-                loseTextObject.SetActive(true);
+                // loseTextObject.SetActive(true);
+                deathController.SetActive(true);
                 isDead = true;
             }
             if (playerInput.actions["Slide"].WasPerformedThisFrame() && grounded && !sliding)
@@ -143,8 +145,9 @@ public class PlayerController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Obstacle") && !sliding)
         {
-            loseTextObject.SetActive(true);
+            // loseTextObject.SetActive(true);
             Debug.Log("bonk");
+            deathController.SetActive(true);
             isDead = true;
         }
     }
