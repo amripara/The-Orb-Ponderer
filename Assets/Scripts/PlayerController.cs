@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     public GameObject winTextObject;
 
     //Death
-    public GameObject loseTextObject;
+    // public GameObject loseTextObject;
+    public GameObject deathController;
     public bool IsDead { get => isDead; }
     [SerializeField] private bool isDead;
 
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
         capsule = GetComponent<CapsuleCollider>();
         count = 0;
         winTextObject.SetActive(false);
-        loseTextObject.SetActive(false);
+        // loseTextObject.SetActive(false);
         originalHeight = capsule.height;
     }
 
@@ -103,9 +104,10 @@ public class PlayerController : MonoBehaviour
                 }
                 isGrounded = false;
             }
-            if (transform.position.y < 0)
+            if (transform.position.y < 0) // NOTE: should be modified later to add more potential death scenarios
             {
-                loseTextObject.SetActive(true);
+                // loseTextObject.SetActive(true);
+                deathController.SetActive(true);
                 isDead = true;
             }
             if (playerInput.actions["Slide"].WasPerformedThisFrame() && isGrounded && !isSliding)
@@ -181,8 +183,9 @@ public class PlayerController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Obstacle") && !isSliding)
         {
-            loseTextObject.SetActive(true);
+            // loseTextObject.SetActive(true);
             Debug.Log("bonk");
+            deathController.SetActive(true);
             isDead = true;
         }
     }
