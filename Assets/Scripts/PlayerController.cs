@@ -15,14 +15,20 @@ public class PlayerController : MonoBehaviour
 
     //Death
     public GameObject loseTextObject;
-    private bool isDead = false;
+    public bool IsDead { get => isDead; }
+    [SerializeField] private bool isDead;
 
     //Moving forward, jumping, sliding
     public float movementSpeed;
     public float speedThreshold;
     public float slidingSpeed;
-    private bool sliding;
-    private bool grounded;
+
+    public bool IsSliding { get => isSliding; }
+    [SerializeField] private bool isSliding;
+
+    public bool IsGrounded { get => isGrounded; }
+    [SerializeField] private bool isGrounded;
+
     private float originalHeight;
     public float slidingHeight;
 
@@ -32,6 +38,17 @@ public class PlayerController : MonoBehaviour
     private bool isTurning;
     private Quaternion toDirection;
     private Quaternion fromDirection;
+
+    // Spells
+    [Header("Speed Boost")]
+    [SerializeField] private float speedBoostDuration;
+    [SerializeField] private float speedBoostSpeedMultiplier;
+    [SerializeField] private bool speedBoostIsActive;
+
+    [Header("Jump Boost")]
+    [SerializeField] private float jumpBoostDuration;
+    [SerializeField] private float jumpBoostForceMultiplier;
+    [SerializeField] private bool jumpBoostIsActive;
 
     // Exposed movement variables
     public Vector3 velocity { get { return rb.velocity; } }
@@ -75,21 +92,36 @@ public class PlayerController : MonoBehaviour
                 isTurning = true;
                 timeRemaining = turnDuration;
             }
-            if (playerInput.actions["Jump"].WasPressedThisFrame() && grounded) // Jumping
+            if (playerInput.actions["Jump"].WasPressedThisFrame() && isGrounded) // Jumping
             {
-                rb.AddForce(Vector3.up * 5, ForceMode.VelocityChange);
-                grounded = false;
+                if (jumpBoostIsActive)
+                {
+                    rb.AddForce(Vector3.up * 5 * jumpBoostForceMultiplier, ForceMode.VelocityChange);
+                } else
+                {
+                    rb.AddForce(Vector3.up * 5, ForceMode.VelocityChange);
+                }
+                isGrounded = false;
             }
             if (transform.position.y < 0)
             {
                 loseTextObject.SetActive(true);
                 isDead = true;
             }
-            if (playerInput.actions["Slide"].WasPerformedThisFrame() && grounded && !sliding)
+            if (playerInput.actions["Slide"].WasPerformedThisFrame() && isGrounded && !isSliding)
             {
-                sliding = true;
+                isSliding = true;
                 capsule.height = slidingHeight;
                 rb.AddForce(transform.forward * slidingSpeed, ForceMode.VelocityChange);
+            }
+            // Spells
+            if (playerInput.actions["SpeedBoost"].WasPerformedThisFrame())
+            {
+                StartCoroutine(SpeedBoost());
+            }
+            if (playerInput.actions["JumpBoost"].WasPerformedThisFrame())
+            {
+                StartCoroutine(JumpBoost());
             }
         }  
     }
@@ -105,14 +137,20 @@ public class PlayerController : MonoBehaviour
             timeRemaining -= Time.deltaTime;
             transform.rotation = Quaternion.Lerp(fromDirection, toDirection, (turnDuration - timeRemaining) / turnDuration);
         }
-        if (!isTurning && grounded && !sliding && !isDead)
+        if (!isTurning && isGrounded && !isSliding && !isDead)
         {
             if (rb.velocity.magnitude < speedThreshold)
             {
-                rb.velocity = transform.forward * movementSpeed;
+                if (speedBoostIsActive)
+                {
+                    rb.velocity = transform.forward * movementSpeed * speedBoostSpeedMultiplier;
+                } else
+                {
+                    rb.velocity = transform.forward * movementSpeed;
+                }
             }
         }
-        if (sliding)
+        if (isSliding)
         {
             if (rb.velocity.magnitude < speedThreshold*0.6)
             {
@@ -125,7 +163,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            grounded = true;
+            isGrounded = true;
         }
     }
 
@@ -141,7 +179,7 @@ public class PlayerController : MonoBehaviour
             count++;
             CheckCount();
         }
-        if (other.gameObject.CompareTag("Obstacle") && !sliding)
+        if (other.gameObject.CompareTag("Obstacle") && !isSliding)
         {
             loseTextObject.SetActive(true);
             Debug.Log("bonk");
@@ -160,22 +198,28 @@ public class PlayerController : MonoBehaviour
     private void UnSlide()
     {
         capsule.height = originalHeight;
-        sliding = false;
+        isSliding = false;
     }
 
-    public bool IsGrounded()
+    /// <summary>
+    /// Applies a speed buff to the player for a duration of speedBoostDuration.
+    /// This simply toggles speedBoostIsActive. FixedUpdate accounts for this to decide
+    /// how quickly the player moves.
+    /// </summary>
+    private IEnumerator SpeedBoost()
     {
-        return grounded;
+        speedBoostIsActive = true;
+        yield return new WaitForSeconds(speedBoostDuration);
+        speedBoostIsActive = false;
     }
-
-    public bool IsSliding()
+    /// <summary>
+    /// Operates identically to the SpeedBoost method.
+    /// </summary>
+    private IEnumerator JumpBoost()
     {
-        return sliding;
-    }
-
-    public bool IsDead()
-    {
-        return isDead;
+        jumpBoostIsActive = true;
+        yield return new WaitForSeconds(jumpBoostDuration);
+        jumpBoostIsActive = false;
     }
 
 }

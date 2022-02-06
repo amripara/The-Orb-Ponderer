@@ -3636,11 +3636,20 @@ MonoBehaviour:
   playerInput: {fileID: 1954537847}
   winTextObject: {fileID: 841791123}
   loseTextObject: {fileID: 1672318273}
+  isDead: 0
   movementSpeed: 7
   speedThreshold: 6
   slidingSpeed: 5
+  isSliding: 0
+  isGrounded: 0
   slidingHeight: 0.5
   turnDuration: 0.25
+  speedBoostDuration: 1
+  speedBoostSpeedMultiplier: 2
+  speedBoostIsActive: 0
+  jumpBoostDuration: 2
+  jumpBoostForceMultiplier: 2
+  jumpBoostIsActive: 0
 --- !u!54 &1954537842
 Rigidbody:
   m_ObjectHideFlags: 0

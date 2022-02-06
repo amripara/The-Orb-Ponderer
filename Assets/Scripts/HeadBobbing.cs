@@ -18,7 +18,7 @@ public class HeadBobbing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if (!player.IsSliding() && player.IsGrounded() && !player.IsDead())
+       if (!player.IsSliding && player.IsGrounded && !player.IsDead)
        timer += Time.deltaTime * bobbingSpeed;
        transform.localPosition = new Vector3(transform.localPosition.x, defaultPosY + Mathf.Sin(timer) * bobbingAmount, transform.localPosition.z);
     }
