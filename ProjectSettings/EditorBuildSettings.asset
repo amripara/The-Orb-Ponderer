@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Template/Scenes/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Prototype.unity
     guid: 9eaed608cd1501d419ca1d453cb99674
+  - enabled: 1
+    path: Assets/Scenes/Amri/Level 1.unity
+    guid: 54f84b301fbbb894a886c10892a2665e
   m_configObjects: {}
