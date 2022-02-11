@@ -125,7 +125,14 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(JumpBoost());
             }
-        }  
+        } else
+        {
+            if (playerInput.actions["Restart"].WasPerformedThisFrame())
+            {
+                PlayerDeath pd = deathController.GetComponent<PlayerDeath>();
+                pd.ReloadLevel();
+            }
+        } 
     }
 
     private void FixedUpdate()
