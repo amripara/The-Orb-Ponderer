@@ -1099,6 +1099,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 216827271}
     m_Modifications:
+    - target: {fileID: 5554447578083765272, guid: 8e1ee4c63f316a54b9d36e76f052c766, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5554447578083765285, guid: 8e1ee4c63f316a54b9d36e76f052c766, type: 3}
       propertyPath: m_Name
       value: TimeSlowMeter
@@ -2039,6 +2043,18 @@ PrefabInstance:
       propertyPath: deathController
       value: 
       objectReference: {fileID: 2055993418}
+    - target: {fileID: 612495973828698089, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: timeSlowMultiplier
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 612495973828698089, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: timeSlowMaxDuration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 612495973828698089, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: timeSlowRegenerationPerSecond
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 612495973828698091, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
       propertyPath: m_Material
       value: 
@@ -2097,7 +2113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1212405697433748705, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.28899089
+      value: 0.28909108
       objectReference: {fileID: 0}
     - target: {fileID: 1212405697433748707, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
       propertyPath: m_Enabled
