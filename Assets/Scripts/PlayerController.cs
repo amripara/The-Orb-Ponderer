@@ -51,6 +51,39 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpBoostForceMultiplier;
     [SerializeField] private bool jumpBoostIsActive;
 
+    [Header("Time Slow")]
+    [SerializeField] private float timeSlowMaxDuration;
+    [Tooltip("Value is seconds per second while not in use")]
+    [SerializeField] private float timeSlowRegenerationPerSecond;
+    [SerializeField] [Range(0,1)] private float timeSlowMultiplier;
+    private float timeSlowDurationRemaining;
+    /// <summary>
+    /// This is set the value in the project settings on startup. This is needed since we alter this 
+    /// value to keep rotation smooth while the Time Slow spell is active.
+    /// </summary>
+    private float defaultFixedDeltaTime;
+    /// <summary>
+    /// Do not modify this value! This should only ever be changed through the property TimeSlowIsActive!
+    /// </summary>
+    private bool _timeSlowIsActive;
+    public bool TimeSlowIsActive
+    {
+        get => _timeSlowIsActive;
+        set { 
+            _timeSlowIsActive = value; 
+            if (_timeSlowIsActive)
+            {
+                Time.timeScale = timeSlowMultiplier;
+                Time.fixedDeltaTime = defaultFixedDeltaTime * timeSlowMultiplier;
+            } else
+            {
+                Time.timeScale = 1;
+                Time.fixedDeltaTime = defaultFixedDeltaTime;
+            }
+        }
+    }
+
+
     // Exposed movement variables
     public Vector3 velocity { get { return rb.velocity; } }
     public float speed { get { return velocity.magnitude; } }
@@ -61,6 +94,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+        defaultFixedDeltaTime = Time.fixedDeltaTime;
     }
 
     // Start is called before the first frame update
@@ -76,6 +110,28 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        HandleInput();
+        #region Time Slow
+        if (!TimeSlowIsActive)
+        {
+            timeSlowDurationRemaining = Mathf.Clamp(timeSlowDurationRemaining + Time.unscaledDeltaTime, 0, timeSlowMaxDuration);
+        } else
+        {
+            timeSlowDurationRemaining = Mathf.Clamp(timeSlowDurationRemaining - Time.unscaledDeltaTime, 0, timeSlowMaxDuration);
+            if (timeSlowDurationRemaining == 0)
+            {
+                TimeSlowIsActive = false;
+            }
+        }
+        TimeSlowMeterManager.Instance.UpdateMeter(timeSlowDurationRemaining, timeSlowMaxDuration);
+        #endregion
+    }
+
+    /// <summary>
+    /// Called every frame to check for input and respond accordingly.
+    /// </summary>
+    private void HandleInput()
     {
         if (!isDead)
         {
@@ -98,7 +154,8 @@ public class PlayerController : MonoBehaviour
                 if (jumpBoostIsActive)
                 {
                     rb.AddForce(Vector3.up * 5 * jumpBoostForceMultiplier, ForceMode.VelocityChange);
-                } else
+                }
+                else
                 {
                     rb.AddForce(Vector3.up * 5, ForceMode.VelocityChange);
                 }
@@ -125,14 +182,22 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(JumpBoost());
             }
-        } else
+            if (playerInput.actions["TimeSlow"].WasPressedThisFrame())
+            {
+                TimeSlowIsActive = true;
+            }
+            if (playerInput.actions["TimeSlow"].WasReleasedThisFrame()) {
+                TimeSlowIsActive = false;
+            }
+        }
+        else
         {
             if (playerInput.actions["Restart"].WasPerformedThisFrame())
             {
                 PlayerDeath pd = deathController.GetComponent<PlayerDeath>();
                 pd.ReloadLevel();
             }
-        } 
+        }
     }
 
     private void FixedUpdate()
