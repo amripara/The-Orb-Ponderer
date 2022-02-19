@@ -164,8 +164,7 @@ public class PlayerController : MonoBehaviour
             if (transform.position.y < 0) // NOTE: should be modified later to add more potential death scenarios
             {
                 // loseTextObject.SetActive(true);
-                deathController.SetActive(true);
-                isDead = true;
+                KillPlayer();
             }
             if (playerInput.actions["Slide"].WasPerformedThisFrame() && isGrounded && !isSliding)
             {
@@ -257,8 +256,7 @@ public class PlayerController : MonoBehaviour
         {
             // loseTextObject.SetActive(true);
             Debug.Log("bonk");
-            deathController.SetActive(true);
-            isDead = true;
+            KillPlayer();
         }
     }
 
@@ -274,6 +272,12 @@ public class PlayerController : MonoBehaviour
     {
         capsule.height = originalHeight;
         isSliding = false;
+    }
+
+    public void KillPlayer()
+    {
+        deathController.SetActive(true);
+        isDead = true;
     }
 
     /// <summary>

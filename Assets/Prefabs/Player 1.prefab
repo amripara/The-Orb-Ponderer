@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 612495973828698095}
   m_Layer: 0
   m_Name: Player 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,6 +145,9 @@ MonoBehaviour:
   jumpBoostDuration: 2
   jumpBoostForceMultiplier: 2
   jumpBoostIsActive: 0
+  timeSlowMaxDuration: 0
+  timeSlowRegenerationPerSecond: 0
+  timeSlowMultiplier: 0
 --- !u!114 &612495973828698095
 MonoBehaviour:
   m_ObjectHideFlags: 0
