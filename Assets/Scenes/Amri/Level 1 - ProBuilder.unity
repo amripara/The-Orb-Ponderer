@@ -115835,6 +115835,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 213988222}
     m_Modifications:
+    - target: {fileID: 1859653669245712477, guid: 95044fe5f63963947a654cbceded927b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cd71291c91c8cce499cb663b5db9970e, type: 2}
+    - target: {fileID: 1859653669993596428, guid: 95044fe5f63963947a654cbceded927b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cd71291c91c8cce499cb663b5db9970e, type: 2}
     - target: {fileID: 2102612812010128002, guid: 95044fe5f63963947a654cbceded927b, type: 3}
       propertyPath: m_Name
       value: LavaTrap
