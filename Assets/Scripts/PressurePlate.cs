@@ -17,6 +17,7 @@ public class PressurePlate : MonoBehaviour
             activated = !activated;
             if (activated) {
                 vent.activate();
+                other.GetComponent<ParticleSystem>().Play();
                 Debug.Log("activating steam vent");
             } else {
                 vent.deactivate();

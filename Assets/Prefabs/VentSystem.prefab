@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &118288803167518639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1517409441693824368}
+  m_Layer: 0
+  m_Name: Steam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1517409441693824368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118288803167518639}
+  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -12, z: 0.51876396}
+  m_LocalScale: {x: 0.29411763, y: -3.4790268, z: 0.2052082}
+  m_Children:
+  - {fileID: 6346946316751771956}
+  m_Father: {fileID: 6346946316325268521}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6346946316325268518
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,6 +72,7 @@ Transform:
   - {fileID: 6346946316990094783}
   - {fileID: 6346946317753883159}
   - {fileID: 6346946317054034027}
+  - {fileID: 1517409441693824368}
   m_Father: {fileID: 6393409849411871338}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -120,18 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed_up: 40
   speed_forward: 10
-  cover0: {fileID: 6346946317047871169}
-  cover1: {fileID: 6346946317889539526}
-  cover2: {fileID: 6346946317414086774}
-  cover3: {fileID: 6346946316545733080}
-  cover4: {fileID: 6346946317523142329}
-  cover5: {fileID: 6346946318179487607}
-  cover6: {fileID: 6346946316502588469}
-  cover7: {fileID: 6346946316990094776}
-  cover8: {fileID: 6346946317753883152}
-  cover9: {fileID: 6346946317054034020}
-  parent: {fileID: 0}
   angle: 90
+  particleSystem: {fileID: 0}
 --- !u!1 &6346946316502588469
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,11 +395,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6346946316751771957}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.81, y: -2.092, z: -6.31}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.11405754, y: -3.3671155, z: -2.8277035}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6346946318110207191}
+  m_Father: {fileID: 1517409441693824368}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &6346946316751771962
@@ -6017,37 +6039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576c69c48e4c70f43b4cc9cb7972a95d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6346946318110207184
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6346946318110207191}
-  m_Layer: 0
-  m_Name: Steam
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6346946318110207191
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6346946318110207184}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.8419666, y: 2.3909662, z: 28.840038}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 6346946316751771956}
-  m_Father: {fileID: 6393409849411871338}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6346946318179487607
 GameObject:
   m_ObjectHideFlags: 0
@@ -6185,7 +6176,6 @@ Transform:
   m_Children:
   - {fileID: 6346946317597851159}
   - {fileID: 6346946316325268521}
-  - {fileID: 6346946318110207191}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
