@@ -5,27 +5,31 @@ using UnityEngine;
 public class SteamVent : MonoBehaviour
 {
     private bool activated = false;
-    public float speed_up = 40f;
-    public float speed_forward = 10f;
+    public float speed_up = 4f;
+    public float speed_forward = 1f;
 
     public float angle = 90f;
-
-    public ParticleSystem particleSystem;
+    public ParticleSystem[] particles;
 
     private void Awake() {
-        particleSystem = GetComponent<ParticleSystem>();
+        particles = GetComponentsInChildren<ParticleSystem>();
+
+        foreach (ParticleSystem particle in particles)
+            particle.Stop();
     }
 
     public void activate() {
         Debug.Log("vent activated");
         activated = true;
-        particleSystem.Play();
+        foreach (ParticleSystem particle in particles)
+            particle.Play();
     }
 
     public void deactivate() {
         Debug.Log("vent deactivated");
         activated = false;
-        particleSystem.Stop();
+        foreach (ParticleSystem particle in particles)
+            particle.Stop();
     }
 
 

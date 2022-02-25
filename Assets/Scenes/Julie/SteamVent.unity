@@ -2252,7 +2252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1212405697433748705, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.29475954
+      value: 0.2961059
       objectReference: {fileID: 0}
     - target: {fileID: 1212405697433748707, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
       propertyPath: m_Enabled
@@ -2266,6 +2266,10 @@ PrefabInstance:
       propertyPath: bobbingAmount
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 1212405697433748708, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: mat
+      value: 
+      objectReference: {fileID: 2100002, guid: ff6dc36862fe41641bb21568d92147c9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
 --- !u!4 &1984578960 stripped
@@ -3020,6 +3024,10 @@ PrefabInstance:
       value: 1.3338332
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316751771956, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.253174
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346946316751771956, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.1
       objectReference: {fileID: 0}
@@ -3029,7 +3037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316751771956, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.88
+      value: -1.25
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316751771962, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: UVModule.tilesX
@@ -3041,11 +3049,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316751771962, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: ShapeModule.type
-      value: 18
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316751771962, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: UVModule.enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346946316751771962, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316751771962, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: SizeModule.enabled
@@ -3113,11 +3125,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316751771962, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.atime1
-      value: 31718
+      value: 20671
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316751771962, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.atime2
-      value: 37842
+      value: 61248
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316751771962, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.atime3
@@ -3183,6 +3195,10 @@ PrefabInstance:
       propertyPath: m_MaxParticleSize
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6346946317597851153, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100006, guid: b451a052397f03c4f8a04d915d1c0492, type: 3}
     - target: {fileID: 6393409849411871338, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: m_RootOrder
       value: 9
