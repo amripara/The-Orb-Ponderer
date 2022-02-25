@@ -253,7 +253,7 @@ public class PlayerController : MonoBehaviour
             count++;
             CheckCount();
         }
-        if (other.gameObject.CompareTag("Obstacle") && !isSliding)
+        if (other.gameObject.CompareTag("Obstacle"))
         {
             // loseTextObject.SetActive(true);
             Debug.Log("bonk");
