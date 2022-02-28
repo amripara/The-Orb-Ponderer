@@ -19,19 +19,26 @@ public class PlayerController : MonoBehaviour
     public bool IsDead { get => isDead; }
     [SerializeField] private bool isDead;
 
-    //Moving forward, jumping, sliding
+    //Moving forward, jumping
     public float movementSpeed;
     public float speedThreshold;
-    public float slidingSpeed;
 
+    //Sliding
+    [Header("Sliding")] 
+    public float slidingSpeed;
+    private float slidingCD = 0; //checking value
+    [SerializeField] private float slidingCoolDown = 0.3f; //modifiable value
+    private float slideInterpolate;
+    public bool StopSlide { get => stopSlide; }
+    private bool stopSlide;
     public bool IsSliding { get => isSliding; }
     [SerializeField] private bool isSliding;
+    private float originalHeight;
+    public float slidingHeight;
 
     public bool IsGrounded { get => isGrounded; }
     [SerializeField] private bool isGrounded;
 
-    private float originalHeight;
-    public float slidingHeight;
 
     //Turning variables
     public float turnDuration;
@@ -104,7 +111,6 @@ public class PlayerController : MonoBehaviour
         capsule = GetComponent<CapsuleCollider>();
         count = 0;
         winTextObject.SetActive(false);
-        // loseTextObject.SetActive(false);
         originalHeight = capsule.height;
     }
 
@@ -169,8 +175,20 @@ public class PlayerController : MonoBehaviour
             if (playerInput.actions["Slide"].WasPerformedThisFrame() && isGrounded && !isSliding)
             {
                 isSliding = true;
-                capsule.height = slidingHeight;
-                rb.AddForce(transform.forward * slidingSpeed, ForceMode.VelocityChange);
+                stopSlide = false;
+                slideInterpolate = 0;
+                if (slidingCD == 0)
+                {
+                    rb.AddForce(transform.forward * slidingSpeed, ForceMode.VelocityChange);
+                }
+            }
+            if (playerInput.actions["Slide"].WasReleasedThisFrame())
+            {
+                if(isSliding)
+                {
+                    stopSlide = true;
+                    slidingCD = slidingCoolDown;
+                }
             }
             // Spells
             if (playerInput.actions["SpeedBoost"].WasPerformedThisFrame())
@@ -201,6 +219,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (slidingCD> 0)
+        {
+            slidingCD -= Time.deltaTime;
+        } else
+        {
+            slidingCD = 0;
+        }
+        
         if (isTurning)
         {
             if (timeRemaining <= 0f)
@@ -225,9 +251,21 @@ public class PlayerController : MonoBehaviour
         }
         if (isSliding)
         {
-            if (rb.velocity.magnitude < speedThreshold*0.6)
+            if (rb.velocity.magnitude < speedThreshold * 0.8 || stopSlide)
             {
-                UnSlide();   
+                slideInterpolate -= 3f * Time.deltaTime;
+                
+            } else
+            {
+                slideInterpolate += 2f * Time.deltaTime;   
+            }
+            capsule.height = Mathf.Lerp(originalHeight, slidingHeight, slideInterpolate);
+            if (capsule.height == 2)
+            {
+                isSliding = false;
+            } else if (capsule.height == 0.5)
+            {
+                slideInterpolate = 1;
             }
         }
     }
@@ -252,7 +290,7 @@ public class PlayerController : MonoBehaviour
             count++;
             CheckCount();
         }
-        if (other.gameObject.CompareTag("Obstacle") && !isSliding)
+        if (other.gameObject.CompareTag("Obstacle"))
         {
             // loseTextObject.SetActive(true);
             Debug.Log("bonk");
@@ -270,7 +308,7 @@ public class PlayerController : MonoBehaviour
 
     private void UnSlide()
     {
-        capsule.height = originalHeight;
+        //capsule.height = originalHeight;
         isSliding = false;
     }
 
