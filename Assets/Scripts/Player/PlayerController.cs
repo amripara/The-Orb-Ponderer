@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public PlayerInput playerInput;
+    [SerializeField] GameObject playerCam;
+    private Vector3 camPos;
     private Rigidbody rb;
     private CapsuleCollider capsule;
 
@@ -107,6 +109,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        camPos = playerCam.transform.localPosition;
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         count = 0;
@@ -117,6 +120,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        playerCam.transform.localPosition = camPos;
         HandleInput();
         #region Time Slow
         if (!TimeSlowIsActive)
@@ -167,12 +171,16 @@ public class PlayerController : MonoBehaviour
                 }
                 isGrounded = false;
             }
+            if (playerInput.actions["Jump"].WasReleasedThisFrame())
+            {
+
+            }
             if (transform.position.y < 0) // NOTE: should be modified later to add more potential death scenarios
             {
                 // loseTextObject.SetActive(true);
                 KillPlayer();
             }
-            if (playerInput.actions["Slide"].WasPerformedThisFrame() && isGrounded && !isSliding)
+            if (playerInput.actions["Slide"].WasPerformedThisFrame() && rb.velocity.y <= 0 && !isSliding)
             {
                 isSliding = true;
                 stopSlide = false;
@@ -206,6 +214,11 @@ public class PlayerController : MonoBehaviour
             if (playerInput.actions["TimeSlow"].WasReleasedThisFrame()) {
                 TimeSlowIsActive = false;
             }
+            //Camera movement
+            //Debug.Log(playerInput.actions["Look"].ReadValue<Vector2>());
+            //Vector2 mouseLook = playerInput.actions["Look"].ReadValue<Vector2>();
+            //playerCam.transform.Rotate(new Vector3(-mouseLook.y, mouseLook.x, 0));
+            
         }
         else
         {
@@ -304,12 +317,6 @@ public class PlayerController : MonoBehaviour
         {
             winTextObject.SetActive(true);
         }
-    }
-
-    private void UnSlide()
-    {
-        //capsule.height = originalHeight;
-        isSliding = false;
     }
 
     public void KillPlayer()

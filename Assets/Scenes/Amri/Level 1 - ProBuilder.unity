@@ -66747,6 +66747,11 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &1154372000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 156714141933758697, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+  m_PrefabInstance: {fileID: 156714142599601327}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1161637326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -115742,6 +115747,30 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 156714141933758696, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714141933758696, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714141933758696, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714141933758696, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714141933758696, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714141933758696, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 156714141933758719, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
       propertyPath: near clip plane
       value: 0.01
@@ -115790,6 +115819,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 156714143368168781, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: playerCam
+      value: 
+      objectReference: {fileID: 1154372000}
     - target: {fileID: 156714143368168781, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
       propertyPath: movementSpeed
       value: 10
