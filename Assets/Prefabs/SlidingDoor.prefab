@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 352171507128281127}
   - component: {fileID: 352171507128281126}
   m_Layer: 0
-  m_Name: Door
+  m_Name: SlidingDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
