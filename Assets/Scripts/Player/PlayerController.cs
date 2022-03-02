@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         count = 0;
-        count_level = 5; //test value
+        count_level = 10; //test value
         winTextObject.SetActive(false);
         nextLevelTextObject.SetActive(false);
         failTextObject.SetActive(false);
