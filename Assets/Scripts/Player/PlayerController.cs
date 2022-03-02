@@ -11,7 +11,10 @@ public class PlayerController : MonoBehaviour
 
     //Key Pieces
     private int count;
+    private int count_level;
     public GameObject winTextObject;
+    public GameObject nextLevelTextObject;
+    public GameObject failTextObject;
 
     //Death
     // public GameObject loseTextObject;
@@ -110,8 +113,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         count = 0;
+        count_level = 5; //test value
         winTextObject.SetActive(false);
-        originalHeight = capsule.height;
+        nextLevelTextObject.SetActive(false);
+        failTextObject.SetActive(false);
+        originalHeight = capsule.height; 
     }
 
     // Update is called once per frame
@@ -288,8 +294,14 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             count++;
+            count_level++;
             CheckCount();
         }
+        if (other.gameObject.CompareTag("Door") && CheckCount_level())
+        { 
+            other.gameObject.GetComponent<HingedDoor>().OpenDoor();
+        }
+
         if (other.gameObject.CompareTag("Obstacle"))
         {
             // loseTextObject.SetActive(true);
@@ -303,6 +315,18 @@ public class PlayerController : MonoBehaviour
         if (count >= 3)
         {
             winTextObject.SetActive(true);
+        }
+    }
+
+    private bool CheckCount_level() {
+        if (count_level >= 3)
+        {
+            nextLevelTextObject.SetActive(true);
+            count_level = 0;
+            return true;
+        } else {
+            failTextObject.SetActive(true);
+            return false;
         }
     }
 

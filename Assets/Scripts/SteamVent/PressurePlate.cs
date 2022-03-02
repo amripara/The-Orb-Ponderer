@@ -6,7 +6,7 @@ public class PressurePlate : MonoBehaviour
 {
     public GameObject ventGameObject;
     private SteamVent vent;
-    private bool activated = false;
+
 
     private void Awake() {
         vent = ventGameObject.GetComponent<SteamVent>();
@@ -14,15 +14,8 @@ public class PressurePlate : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") {
-            activated = !activated;
-            if (activated) {
-                vent.activate();
-                other.GetComponent<ParticleSystem>().Play();
-                Debug.Log("activating steam vent");
-            } else {
-                vent.deactivate();
-                Debug.Log("deactivating steam vent");
-            }
+            vent.activate();
+            other.GetComponent<ParticleSystem>().Play();
         }
     }
 }

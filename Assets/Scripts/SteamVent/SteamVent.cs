@@ -5,7 +5,7 @@ using UnityEngine;
 public class SteamVent : MonoBehaviour
 {
     private bool activated = false;
-    public float speed_up = 40f;
+    public float speed_up = 50f;
     public float speed_forward = 10f;
 
     public ParticleSystem[] particles;
@@ -31,7 +31,6 @@ public class SteamVent : MonoBehaviour
     }
 
     public void activate() {
-        Debug.Log("vent activated");
         activated = true;
         foreach (VentCover cover in ventCovers) 
             cover.open();
@@ -40,7 +39,6 @@ public class SteamVent : MonoBehaviour
     }
 
     public void deactivate() {
-        Debug.Log("vent deactivated");
         activated = false;
         foreach (VentCover cover in ventCovers) 
             cover.close();
@@ -50,9 +48,8 @@ public class SteamVent : MonoBehaviour
 
 
     private void OnTriggerStay(Collider other) {
-        Debug.Log("Entered the vent");
         timer = 1f;
-        if (activated && other.attachedRigidbody && timer >= 0) {
+        if (activated && other.attachedRigidbody) {
             other.attachedRigidbody.AddForce(Vector3.up * speed_up);
             other.attachedRigidbody.AddForce(Vector3.forward * speed_forward);
         }

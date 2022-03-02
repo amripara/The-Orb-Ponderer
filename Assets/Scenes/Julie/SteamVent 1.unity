@@ -6985,7 +6985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 156714141933758696, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.28914258
+      value: 0.28918496
       objectReference: {fileID: 0}
     - target: {fileID: 156714143368168776, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7850,11 +7850,11 @@ PrefabInstance:
       objectReference: {fileID: 1608028574}
     - target: {fileID: 6346946316325268517, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: speed_up
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316325268517, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: speed_forward
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6346946316325268517, guid: 6ef9036e5a3127c41b4038753204f6d0, type: 3}
       propertyPath: particleSystem
