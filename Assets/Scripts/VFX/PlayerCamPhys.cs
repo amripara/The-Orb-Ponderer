@@ -25,8 +25,8 @@ public class PlayerCamPhys : MonoBehaviour
     public bool manual_mode;
     [Range(0, 1)]
     public float manual_debug_vfx_t;
-
-    [SerializeField]
+ 
+    [SerializeField] 
     Material mat;
 
     enum TLerpFormula
@@ -43,7 +43,7 @@ public class PlayerCamPhys : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame

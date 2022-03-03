@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2023,6 +2023,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 156714141933758696, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00000026822093
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714141933758696, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.2882388
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714141933758696, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714143368168776, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714143368168776, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714143368168776, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714143368168776, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714143368168776, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714143368168776, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156714143368168776, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 612495973828698088, guid: 04d562709c8c70f479dfcaaae77b0b1d, type: 3}
       propertyPath: m_Name
       value: Player 1
