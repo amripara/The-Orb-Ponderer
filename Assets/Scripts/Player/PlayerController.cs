@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour
     {
         _instance = this;
         defaultFixedDeltaTime = Time.fixedDeltaTime;
+        Sounds.Initialize();
     }
 
     // Start is called before the first frame update
@@ -178,6 +179,15 @@ public class PlayerController : MonoBehaviour
                     rb.AddForce(Vector3.up * 5, ForceMode.VelocityChange);
                 }
                 isGrounded = false;
+                
+                // play a jumping sound
+                Sounds.StopPlayingRunningSound();
+                int rand = Random.Range(0,2);
+                if (rand == 0) {
+                    Sounds.PlaySound(Sounds.Sound.PlayerJump1);
+                } else {
+                    Sounds.PlaySound(Sounds.Sound.PlayerJump2);
+                }
             }
             if (playerInput.actions["Jump"].WasReleasedThisFrame())
             {
@@ -197,6 +207,8 @@ public class PlayerController : MonoBehaviour
                 {
                     rb.AddForce(transform.forward * slidingSpeed, ForceMode.VelocityChange);
                 }
+                Sounds.StopPlayingRunningSound();
+                Sounds.PlaySound(Sounds.Sound.PlayerSlide_Wood);
             }
             if (playerInput.actions["Slide"].WasReleasedThisFrame())
             {
@@ -270,6 +282,7 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = transform.forward * movementSpeed;
                 }
             }
+            Sounds.PlaySound(Sounds.Sound.PlayerRun_Wood);
         }
         if (isSliding)
         {
