@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(transform.up * -9f, ForceMode.Acceleration); // fake gravity
+        rb.AddForce(transform.up * -9.81f, ForceMode.Acceleration); // fake gravity
         if (slidingCD> 0)
         {
             slidingCD -= Time.deltaTime;
@@ -359,13 +359,13 @@ public class PlayerController : MonoBehaviour
             failTextObject.SetActive(true);
             Text textComponent = failTextObject.GetComponentInChildren<Text>();
             textComponent.text = "Find the tablet!";
-            count_level++;
+            //count_level = 0;
             return false;
         } 
         else {
             failTextObject.SetActive(true);
             Text textComponent = failTextObject.GetComponentInChildren<Text>();
-            textComponent.text = count_level + "/3 runes remaining!";
+            textComponent.text = count_level + "/3 runes gathered!";
             return false;
         }
         
