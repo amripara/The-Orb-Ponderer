@@ -8,7 +8,7 @@ public class StartMenu : MonoBehaviour
     public void StartGame()
     {
         // TO DO: replace with first gameplay scene
-        SceneManager.LoadScene("Prototype");
+        SceneManager.LoadScene("Level 1");
     }
 
     public void GoToSettingsMenu()

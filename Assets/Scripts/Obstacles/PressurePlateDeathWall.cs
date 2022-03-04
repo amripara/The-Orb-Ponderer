@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
-public class PressurePlate : MonoBehaviour
+public class PressurePlateDeathWall : MonoBehaviour
 {
     public PressurePlateEvent onSteppedOn;
     public PressurePlateEvent onSteppedOff;
+    [SerializeField] private Material matChanged;
+    [SerializeField] private Material originalMat;
+    private float matChanger = 0;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -17,6 +20,16 @@ public class PressurePlate : MonoBehaviour
             {
                 // Call our event if it isn't null
                 onSteppedOn.onTrigger?.Invoke();
+                if (matChanger == 0)
+                {
+                    gameObject.GetComponent<MeshRenderer>().material = matChanged;
+                    matChanger = 1;
+                } else if (matChanger == 1)
+                {
+                    gameObject.GetComponent<MeshRenderer>().material = originalMat;
+                    matChanger = 0;
+                }
+                
             }
         }
     }
