@@ -6,12 +6,17 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public PlayerInput playerInput;
+    [SerializeField] GameObject playerCam;
+    private Vector3 camPos;
     private Rigidbody rb;
     private CapsuleCollider capsule;
 
     //Key Pieces
     private int count;
+    private int count_level;
     public GameObject winTextObject;
+    public GameObject nextLevelTextObject;
+    public GameObject failTextObject;
 
     //Death
     // public GameObject loseTextObject;
@@ -19,19 +24,26 @@ public class PlayerController : MonoBehaviour
     public bool IsDead { get => isDead; }
     [SerializeField] private bool isDead;
 
-    //Moving forward, jumping, sliding
+    //Moving forward, jumping
     public float movementSpeed;
     public float speedThreshold;
-    public float slidingSpeed;
 
+    //Sliding
+    [Header("Sliding")] 
+    public float slidingSpeed;
+    private float slidingCD = 0; //checking value
+    [SerializeField] private float slidingCoolDown = 0.3f; //modifiable value
+    private float slideInterpolate;
+    public bool StopSlide { get => stopSlide; }
+    private bool stopSlide;
     public bool IsSliding { get => isSliding; }
     [SerializeField] private bool isSliding;
+    private float originalHeight;
+    public float slidingHeight;
 
     public bool IsGrounded { get => isGrounded; }
     [SerializeField] private bool isGrounded;
 
-    private float originalHeight;
-    public float slidingHeight;
 
     //Turning variables
     public float turnDuration;
@@ -100,17 +112,21 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        camPos = playerCam.transform.localPosition;
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         count = 0;
+        count_level = 10; //test value
         winTextObject.SetActive(false);
-        // loseTextObject.SetActive(false);
-        originalHeight = capsule.height;
+        nextLevelTextObject.SetActive(false);
+        failTextObject.SetActive(false);
+        originalHeight = capsule.height; 
     }
 
     // Update is called once per frame
     void Update()
     {
+        playerCam.transform.localPosition = camPos;
         HandleInput();
         #region Time Slow
         if (!TimeSlowIsActive)
@@ -161,16 +177,32 @@ public class PlayerController : MonoBehaviour
                 }
                 isGrounded = false;
             }
+            if (playerInput.actions["Jump"].WasReleasedThisFrame())
+            {
+
+            }
             if (transform.position.y < 0) // NOTE: should be modified later to add more potential death scenarios
             {
                 // loseTextObject.SetActive(true);
                 KillPlayer();
             }
-            if (playerInput.actions["Slide"].WasPerformedThisFrame() && isGrounded && !isSliding)
+            if (playerInput.actions["Slide"].WasPerformedThisFrame() && rb.velocity.y <= 0 && !isSliding)
             {
                 isSliding = true;
-                capsule.height = slidingHeight;
-                rb.AddForce(transform.forward * slidingSpeed, ForceMode.VelocityChange);
+                stopSlide = false;
+                slideInterpolate = 0;
+                if (slidingCD == 0)
+                {
+                    rb.AddForce(transform.forward * slidingSpeed, ForceMode.VelocityChange);
+                }
+            }
+            if (playerInput.actions["Slide"].WasReleasedThisFrame())
+            {
+                if(isSliding)
+                {
+                    stopSlide = true;
+                    slidingCD = slidingCoolDown;
+                }
             }
             // Spells
             if (playerInput.actions["SpeedBoost"].WasPerformedThisFrame())
@@ -188,6 +220,11 @@ public class PlayerController : MonoBehaviour
             if (playerInput.actions["TimeSlow"].WasReleasedThisFrame()) {
                 TimeSlowIsActive = false;
             }
+            //Camera movement
+            //Debug.Log(playerInput.actions["Look"].ReadValue<Vector2>());
+            //Vector2 mouseLook = playerInput.actions["Look"].ReadValue<Vector2>();
+            //playerCam.transform.Rotate(new Vector3(-mouseLook.y, mouseLook.x, 0));
+            
         }
         else
         {
@@ -201,6 +238,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (slidingCD> 0)
+        {
+            slidingCD -= Time.deltaTime;
+        } else
+        {
+            slidingCD = 0;
+        }
+        
         if (isTurning)
         {
             if (timeRemaining <= 0f)
@@ -225,9 +270,21 @@ public class PlayerController : MonoBehaviour
         }
         if (isSliding)
         {
-            if (rb.velocity.magnitude < speedThreshold*0.6)
+            if (rb.velocity.magnitude < speedThreshold * 0.8 || stopSlide)
             {
-                UnSlide();   
+                slideInterpolate -= 3f * Time.deltaTime;
+                
+            } else
+            {
+                slideInterpolate += 2f * Time.deltaTime;   
+            }
+            capsule.height = Mathf.Lerp(originalHeight, slidingHeight, slideInterpolate);
+            if (capsule.height == 2)
+            {
+                isSliding = false;
+            } else if (capsule.height == 0.5)
+            {
+                slideInterpolate = 1;
             }
         }
     }
@@ -250,9 +307,15 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             count++;
+            count_level++;
             CheckCount();
         }
-        if (other.gameObject.CompareTag("Obstacle") && !isSliding)
+        if (other.gameObject.CompareTag("Door") && CheckCount_level())
+        { 
+            other.gameObject.GetComponent<HingedDoor>().OpenDoor();
+        }
+
+        if (other.gameObject.CompareTag("Obstacle"))
         {
             // loseTextObject.SetActive(true);
             Debug.Log("bonk");
@@ -268,9 +331,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool CheckCount_level() {
+        if (count_level >= 3)
+        {
+            nextLevelTextObject.SetActive(true);
+            count_level = 0;
+            return true;
+        } else {
+            failTextObject.SetActive(true);
+            return false;
+        }
+    }
+
     private void UnSlide()
     {
-        capsule.height = originalHeight;
+        //capsule.height = originalHeight;
         isSliding = false;
     }
 
