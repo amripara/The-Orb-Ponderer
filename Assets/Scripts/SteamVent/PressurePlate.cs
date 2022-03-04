@@ -15,7 +15,7 @@ public class PressurePlate : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") {
             vent.activate();
-            other.GetComponent<ParticleSystem>().Play();
+            //other.GetComponent<ParticleSystem>().Play();
         }
     }
 }

@@ -51,7 +51,7 @@ public class SteamVent : MonoBehaviour
         timer = 1f;
         if (activated && other.attachedRigidbody) {
             other.attachedRigidbody.AddForce(Vector3.up * speed_up);
-            other.attachedRigidbody.AddForce(Vector3.forward * speed_forward);
+            other.attachedRigidbody.AddForce(other.transform.forward * speed_forward);
         }
     }
 }

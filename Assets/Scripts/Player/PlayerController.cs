@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,9 +13,9 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider capsule;
 
     //Key Pieces
-    private int count;
+    //private int count;
     private int count_level;
-    public GameObject winTextObject;
+    //public GameObject winTextObject;
     public GameObject nextLevelTextObject;
     public GameObject failTextObject;
 
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
     //Moving forward, jumping
     public float movementSpeed;
     public float speedThreshold;
+    public bool IsGrounded { get => isGrounded; }
+    [SerializeField] private bool isGrounded;
 
     //Sliding
     [Header("Sliding")] 
@@ -41,8 +44,7 @@ public class PlayerController : MonoBehaviour
     private float originalHeight;
     public float slidingHeight;
 
-    public bool IsGrounded { get => isGrounded; }
-    [SerializeField] private bool isGrounded;
+
 
 
     //Turning variables
@@ -115,9 +117,9 @@ public class PlayerController : MonoBehaviour
         camPos = playerCam.transform.localPosition;
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
-        count = 0;
-        count_level = 10; //test value
-        winTextObject.SetActive(false);
+        //count = 0;
+        count_level = -1;
+        //winTextObject.SetActive(false);
         nextLevelTextObject.SetActive(false);
         failTextObject.SetActive(false);
         originalHeight = capsule.height; 
@@ -238,6 +240,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        rb.AddForce(transform.up * -9f, ForceMode.Acceleration); // fake gravity
         if (slidingCD> 0)
         {
             slidingCD -= Time.deltaTime;
@@ -287,6 +290,11 @@ public class PlayerController : MonoBehaviour
                 slideInterpolate = 1;
             }
         }
+        RaycastHit hit;
+        if (!Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
+        {
+            isGrounded = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -294,6 +302,17 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
+            //preGrounded = false;
+            //groundTime = 1f;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+           // preGrounded = true;
+           // Debug.Log("lol");
         }
     }
 
@@ -302,13 +321,16 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("KeyStone"))
         {
             other.gameObject.SetActive(false);
+            count_level++;
+            CheckCount_level();
         }
         if (other.gameObject.CompareTag("KeyPiece"))
         {
             other.gameObject.SetActive(false);
-            count++;
+            //count++;
             count_level++;
-            CheckCount();
+            CheckCount_level();
+            //CheckCount();
         }
         if (other.gameObject.CompareTag("Door") && CheckCount_level())
         { 
@@ -323,30 +345,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void CheckCount()
-    {
-        if (count >= 3)
-        {
-            winTextObject.SetActive(true);
-        }
-    }
 
     private bool CheckCount_level() {
+        //Debug.Log(count_level);
         if (count_level >= 3)
         {
             nextLevelTextObject.SetActive(true);
-            count_level = 0;
+            //count_level = 0;
+            //Debug.Log("won");
             return true;
-        } else {
+        } else if (count_level < 0)
+        {
             failTextObject.SetActive(true);
+            Text textComponent = failTextObject.GetComponentInChildren<Text>();
+            textComponent.text = "Find the tablet!";
+            count_level++;
+            return false;
+        } 
+        else {
+            failTextObject.SetActive(true);
+            Text textComponent = failTextObject.GetComponentInChildren<Text>();
+            textComponent.text = count_level + "/3 runes remaining!";
             return false;
         }
-    }
-
-    private void UnSlide()
-    {
-        //capsule.height = originalHeight;
-        isSliding = false;
+        
     }
 
     public void KillPlayer()
