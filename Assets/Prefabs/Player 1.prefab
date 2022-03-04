@@ -395,15 +395,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 156714143368168782}
+  playerCam: {fileID: 156714141933758697}
   winTextObject: {fileID: 0}
   deathController: {fileID: 0}
   isDead: 0
-  movementSpeed: 12
+  movementSpeed: 10
   speedThreshold: 10
   slidingSpeed: 5
+  slidingCoolDown: 0.3
   isSliding: 0
-  isGrounded: 0
   slidingHeight: 0.5
+  isGrounded: 0
   turnDuration: 0.25
   speedBoostDuration: 1
   speedBoostSpeedMultiplier: 2
