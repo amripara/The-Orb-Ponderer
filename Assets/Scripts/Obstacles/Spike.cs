@@ -12,6 +12,13 @@ public class Spike : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && !killingPlayer) {
             killingPlayer = true;
+            Sounds.StopPlayingRunningSound();
+            int rand = Random.Range(0,2);
+            if (rand == 0) {
+                Sounds.PlaySound(Sounds.Sound.Sweeping_Spikes_Hit1);
+            } else {
+                Sounds.PlaySound(Sounds.Sound.Sweeping_Spikes_Hit2);
+            }
             playerScript.KillPlayer();
         }
     }

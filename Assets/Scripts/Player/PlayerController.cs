@@ -184,18 +184,19 @@ public class PlayerController : MonoBehaviour
                 Sounds.StopPlayingRunningSound();
                 int rand = Random.Range(0,2);
                 if (rand == 0) {
-                    Sounds.PlaySound(Sounds.Sound.PlayerJump1);
+                    Sounds.PlaySound(Sounds.Sound.Player_Jump1);
                 } else {
-                    Sounds.PlaySound(Sounds.Sound.PlayerJump2);
+                    Sounds.PlaySound(Sounds.Sound.Player_Jump2);
                 }
             }
             if (playerInput.actions["Jump"].WasReleasedThisFrame())
             {
 
             }
-            if (transform.position.y < 0) // NOTE: should be modified later to add more potential death scenarios
+            if (transform.position.y < 0)
             {
-                // loseTextObject.SetActive(true);
+                Sounds.StopPlayingRunningSound();
+                Sounds.PlaySound(Sounds.Sound.Player_Death_Fall);
                 KillPlayer();
             }
             if (playerInput.actions["Slide"].WasPerformedThisFrame() && rb.velocity.y <= 0 && !isSliding)
@@ -208,7 +209,7 @@ public class PlayerController : MonoBehaviour
                     rb.AddForce(transform.forward * slidingSpeed, ForceMode.VelocityChange);
                 }
                 Sounds.StopPlayingRunningSound();
-                Sounds.PlaySound(Sounds.Sound.PlayerSlide_Wood);
+                Sounds.PlaySound(Sounds.Sound.PlayerSlide);
             }
             if (playerInput.actions["Slide"].WasReleasedThisFrame())
             {
@@ -282,7 +283,7 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = transform.forward * movementSpeed;
                 }
             }
-            Sounds.PlaySound(Sounds.Sound.PlayerRun_Wood);
+            Sounds.PlaySound(Sounds.Sound.PlayerRun_Metal);
         }
         if (isSliding)
         {
@@ -354,6 +355,8 @@ public class PlayerController : MonoBehaviour
         {
             // loseTextObject.SetActive(true);
             Debug.Log("bonk");
+            Sounds.StopPlayingRunningSound();
+            Sounds.PlaySound(Sounds.Sound.Player_Death_Fall);
             KillPlayer();
         }
     }

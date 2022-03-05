@@ -44,7 +44,7 @@ public class HingedDoor : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
          timer = 1f;
          if (other.tag == "Player" && isEntryDoor) {
-             OpenDoor();
+            OpenDoor();
             Debug.Log('l');
          }
      }
