@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
-    public PlayerController playerScript;
+    private PlayerController playerScript;
 
-    private bool killingPlayer = false;
+    void Start()
+    {
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
     
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Player" && !killingPlayer) {
-            killingPlayer = true;
+        if (other.gameObject.tag == "Player") {
             Sounds.StopPlayingRunningSound();
             int rand = Random.Range(0,2);
             if (rand == 0) {
