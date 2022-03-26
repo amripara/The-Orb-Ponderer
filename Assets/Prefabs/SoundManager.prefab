@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bd34ece2017694db38f6d8dd8735de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterVolMixer: {fileID: 24300002, guid: 8b61bc31c8990b047ba52a9acd1ded3a, type: 2}
+  sfxVolMixer: {fileID: 24300002, guid: 8b61bc31c8990b047ba52a9acd1ded3a, type: 2}
   soundAudioClipArray:
   - sound: 0
     audioClip: {fileID: 8300000, guid: c6293d1935c8ea146aa01010a87d00b2, type: 3}

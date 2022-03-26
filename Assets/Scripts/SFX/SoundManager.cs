@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
-    public AudioMixerGroup masterVolMixer;
+    public AudioMixerGroup sfxVolMixer;
     public SoundAudioClip[] soundAudioClipArray;
     
     private void Awake()
