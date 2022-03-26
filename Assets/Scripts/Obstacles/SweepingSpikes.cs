@@ -67,6 +67,7 @@ public class SweepingSpikes : MonoBehaviour
         }
         
         // move sweeping spike out from wall
+        Sounds.PlaySound(Sounds.Sound.SweepingSpikes_Open);
         upperFlap.GetComponent<GlideController>().SetDestination(new Vector3(upperFlapStartPos.x, upperFlapStartPos.y + 0.55f, upperFlapStartPos.z));
         lowerFlap.GetComponent<GlideController>().SetDestination(new Vector3(lowerFlapStartPos.x, lowerFlapStartPos.y - 0.55f, lowerFlapStartPos.z));
         yield return new WaitForSeconds(0.2f);
@@ -77,6 +78,7 @@ public class SweepingSpikes : MonoBehaviour
         yield return new WaitForSeconds(spikeWaitTime);
         
         // rotate spike in sweeping motion
+        Sounds.PlaySound(Sounds.Sound.SweepingSpikes_Swing);
         Quaternion startAngle = spike.transform.rotation;
         Quaternion targetAngle = spike.transform.rotation;
         if (closerToRightPoint) {
@@ -92,6 +94,7 @@ public class SweepingSpikes : MonoBehaviour
         spike.transform.rotation = targetAngle;
 
         // retract sweeping spike back into wall
+        Sounds.PlaySound(Sounds.Sound.SweepingSpikes_Close);
         baseObj.GetComponent<GlideController>().SetDestination(new Vector3(baseStartPos.x, baseStartPos.y, baseStartPos.z));
         spike.GetComponent<GlideController>().SetDestination(new Vector3(spikeStartPos.x, spikeStartPos.y, spikeStartPos.z));
         yield return new WaitForSeconds(0.25f);

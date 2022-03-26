@@ -7,29 +7,47 @@ public static class Sounds
     public enum Sound 
     {
         // PLAYER //
-        PlayerRun_Metal,
         PlayerSlide,
         Player_Jump1,
         Player_Jump2,
         Player_Death_Fall,
+        Player_Death_Burn,
+        Player_Death_Grunt1,
+        Player_Death_Grunt2,
         
         // OBSTACLES //
 
         // Sweeping Spikes
-        Sweeping_Spikes_Hit1,
-        Sweeping_Spikes_Hit2
+        SweepingSpikes_Hit1,
+        SweepingSpikes_Hit2,
+        SweepingSpikes_Open,
+        SweepingSpikes_Close,
+        SweepingSpikes_Swing,
+
+        // INTERACTABLES //
+        Door_Open,
+        Door_Close,
+        SlidingDoor_Open,
+        SlidingDoor_Close,
+        SteamVent_PressurePlate,
+        Item_Pickup,
+
+        // MISC
+        Win_Sound,
+        Lose_Sound
     }
 
     private static Dictionary<Sound, float> soundTimerDictionary;
     private static GameObject oneShotGameObject;
     private static AudioSource oneShotAudioSource;
-
-    private static float PlayerRun_Metal_Duration = 3.135f;
+    private static AudioSource[] allAudioSources;
+    private static bool active;
 
     public static void Initialize()
     {
         soundTimerDictionary = new Dictionary<Sound, float>();
-        soundTimerDictionary[Sound.PlayerRun_Metal] = -PlayerRun_Metal_Duration;
+        allAudioSources = Resources.FindObjectsOfTypeAll(typeof(AudioSource)) as AudioSource[];
+        active = true;
     }
 
     public static void PlaySound(Sound sound)
@@ -38,8 +56,11 @@ public static class Sounds
             if (oneShotGameObject == null) {
                 oneShotGameObject = new GameObject("One Shot Sound");
                 oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
+                oneShotAudioSource.outputAudioMixerGroup = SoundManager.GetSoundManager().masterVolMixer;
             }
-            oneShotAudioSource.PlayOneShot(GetAudioClip(sound));
+            if (active || (sound == Sound.Win_Sound || sound == Sound.Lose_Sound)) {
+                oneShotAudioSource.PlayOneShot(GetAudioClip(sound));
+            }
         }
     }
 
@@ -48,26 +69,7 @@ public static class Sounds
         switch(sound) {
         default:
             return true;
-        case Sound.PlayerRun_Metal:
-            if (soundTimerDictionary.ContainsKey(sound)) {
-                float lastTimePlayed = soundTimerDictionary[sound];
-                float playerMoveTimerMax = PlayerRun_Metal_Duration;
-                if (lastTimePlayed + playerMoveTimerMax < Time.time) {
-                    soundTimerDictionary[sound] = Time.time;
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
         }
-    }
-
-    public static void StopPlayingRunningSound()
-    {
-        oneShotAudioSource.Stop();
-        soundTimerDictionary[Sound.PlayerRun_Metal] = -PlayerRun_Metal_Duration;
     }
 
     private static AudioClip GetAudioClip(Sound sound)
@@ -79,5 +81,13 @@ public static class Sounds
         }
         Debug.LogError("Sound " + sound + " not found!");
         return null;
+    }
+
+    public static void StopAllAudio()
+    {
+        foreach (AudioSource audioS in allAudioSources) {
+            audioS.Stop();
+            active = false;
+        }
     }
 }

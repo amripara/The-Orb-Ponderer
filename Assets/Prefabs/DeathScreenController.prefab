@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c7163e655c61141963084c1b2e30c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textWaitTime: 1
+  textWaitTime: 1.2
   deathText: {fileID: 8607976401818855495}
 --- !u!1 &8607976401197401651
 GameObject:

@@ -14,12 +14,11 @@ public class Spike : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Player") {
-            Sounds.StopPlayingRunningSound();
             int rand = Random.Range(0,2);
             if (rand == 0) {
-                Sounds.PlaySound(Sounds.Sound.Sweeping_Spikes_Hit1);
+                Sounds.PlaySound(Sounds.Sound.SweepingSpikes_Hit1);
             } else {
-                Sounds.PlaySound(Sounds.Sound.Sweeping_Spikes_Hit2);
+                Sounds.PlaySound(Sounds.Sound.SweepingSpikes_Hit2);
             }
             playerScript.KillPlayer();
         }
