@@ -132,3 +132,5 @@ MonoBehaviour:
         m_Calls: []
     canTriggerMultipleTimes: 0
     hasBeenTriggered: 0
+  matChanged: {fileID: 0}
+  originalMat: {fileID: 0}

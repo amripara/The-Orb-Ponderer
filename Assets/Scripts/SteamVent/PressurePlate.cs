@@ -14,6 +14,7 @@ public class PressurePlate : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") {
+            Sounds.PlaySound(Sounds.Sound.SteamVent_PressurePlate);
             vent.activate();
             //other.GetComponent<ParticleSystem>().Play();
         }

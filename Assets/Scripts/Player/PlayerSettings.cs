@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerSettings : MonoBehaviour
 {
     private static PlayerSettings instance = null;
-    private static float masterVolumeValue = 0.75f;
+    private static float sfxVolumeValue = 0.75f;
 
      void Awake()
     {
@@ -18,13 +18,18 @@ public class PlayerSettings : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public float GetMasterVolume()
+    void Update()
     {
-        return masterVolumeValue;
+        Debug.Log(sfxVolumeValue);
     }
 
-    public void SetMasterVolume(float value)
+    public float GetSFXVolume()
     {
-        masterVolumeValue = value;
+        return sfxVolumeValue;
+    }
+
+    public void SetSFXVolume(float value)
+    {
+        sfxVolumeValue = value;
     }
 }

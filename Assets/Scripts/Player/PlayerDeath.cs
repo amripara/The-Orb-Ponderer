@@ -17,8 +17,11 @@ public class PlayerDeath : MonoBehaviour
 
     IEnumerator DeathScreen()
     {
+        Sounds.StopAllAudio();
         yield return new WaitForSeconds(textWaitTime);
         deathText.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        Sounds.PlaySound(Sounds.Sound.Lose_Sound);
     }
 
     public void ReloadLevel()

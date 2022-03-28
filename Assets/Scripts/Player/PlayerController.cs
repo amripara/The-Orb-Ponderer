@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 camPos;
     private Rigidbody rb;
     private CapsuleCollider capsule;
+    private AudioSource audioSource;
+    private bool running = true;
 
     //Key Pieces
     //private int count;
@@ -123,7 +125,9 @@ public class PlayerController : MonoBehaviour
         //winTextObject.SetActive(false);
         nextLevelTextObject.SetActive(false);
         failTextObject.SetActive(false);
-        originalHeight = capsule.height; 
+        originalHeight = capsule.height;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
     }
 
     // Update is called once per frame
@@ -181,21 +185,25 @@ public class PlayerController : MonoBehaviour
                 isGrounded = false;
                 
                 // play a jumping sound
-                Sounds.StopPlayingRunningSound();
+                audioSource.Stop();
+                running = false;
                 int rand = Random.Range(0,2);
                 if (rand == 0) {
-                    Sounds.PlaySound(Sounds.Sound.PlayerJump1);
+                    Sounds.PlaySound(Sounds.Sound.Player_Jump1);
                 } else {
-                    Sounds.PlaySound(Sounds.Sound.PlayerJump2);
+                    Sounds.PlaySound(Sounds.Sound.Player_Jump2);
                 }
             }
             if (playerInput.actions["Jump"].WasReleasedThisFrame())
             {
 
             }
-            if (transform.position.y < 0) // NOTE: should be modified later to add more potential death scenarios
+            if (transform.position.y < 0)
             {
-                // loseTextObject.SetActive(true);
+                audioSource.Stop();
+                running = false;
+                isDead = true;
+                Sounds.PlaySound(Sounds.Sound.Player_Death_Fall);
                 KillPlayer();
             }
             if (playerInput.actions["Slide"].WasPerformedThisFrame() && rb.velocity.y <= 0 && !isSliding)
@@ -207,8 +215,9 @@ public class PlayerController : MonoBehaviour
                 {
                     rb.AddForce(transform.forward * slidingSpeed, ForceMode.VelocityChange);
                 }
-                Sounds.StopPlayingRunningSound();
-                Sounds.PlaySound(Sounds.Sound.PlayerSlide_Wood);
+                audioSource.Stop();
+                running = false;
+                Sounds.PlaySound(Sounds.Sound.PlayerSlide);
             }
             if (playerInput.actions["Slide"].WasReleasedThisFrame())
             {
@@ -282,7 +291,10 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = transform.forward * movementSpeed;
                 }
             }
-            Sounds.PlaySound(Sounds.Sound.PlayerRun_Wood);
+            if (!running) {
+                running = true;
+                audioSource.Play();
+            }
         }
         if (isSliding)
         {
@@ -334,12 +346,14 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("KeyStone"))
         {
             other.gameObject.SetActive(false);
+            Sounds.PlaySound(Sounds.Sound.Item_Pickup);
             count_level++;
             CheckCount_level();
         }
         if (other.gameObject.CompareTag("KeyPiece"))
         {
             other.gameObject.SetActive(false);
+            Sounds.PlaySound(Sounds.Sound.Item_Pickup);
             //count++;
             count_level++;
             CheckCount_level();
@@ -386,8 +400,23 @@ public class PlayerController : MonoBehaviour
 
     public void KillPlayer()
     {
+        audioSource.Stop();
+        running = false;
+        if (!isDead) {
+            isDead = true;
+            int rand = Random.Range(0,2);
+            if (rand == 0) {
+                Sounds.PlaySound(Sounds.Sound.Player_Death_Grunt1);
+            } else {
+                Sounds.PlaySound(Sounds.Sound.Player_Death_Grunt2);
+            }
+        }
         deathController.SetActive(true);
-        isDead = true;
+    }
+
+    public void SetPlayerDead(bool alive) 
+    {
+        isDead = alive;
     }
 
     /// <summary>
