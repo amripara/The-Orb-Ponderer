@@ -7,8 +7,10 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public PlayerInput playerInput;
-    [SerializeField] GameObject playerCam;
+    [SerializeField] private GameObject playerCam;
+    [SerializeField] private GameObject playerArms;
     private Vector3 camPos;
+    private Vector3 armPos;
     private Rigidbody rb;
     private CapsuleCollider capsule;
     private AudioSource audioSource;
@@ -118,6 +120,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         camPos = playerCam.transform.localPosition;
+        armPos = playerArms.transform.localPosition;
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         //count = 0;
@@ -134,6 +137,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         playerCam.transform.localPosition = camPos;
+        playerArms.transform.localPosition = armPos;
         HandleInput();
         #region Time Slow
         if (!TimeSlowIsActive)
@@ -254,6 +258,7 @@ public class PlayerController : MonoBehaviour
             if (playerInput.actions["Restart"].WasPerformedThisFrame())
             {
                 PlayerDeath pd = deathController.GetComponent<PlayerDeath>();
+                TimeSlowIsActive = false;
                 pd.ReloadLevel();
             }
         }
