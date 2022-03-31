@@ -11,11 +11,13 @@ public class SteamVent : MonoBehaviour
     public ParticleSystem[] particles;
     public VentCover[] ventCovers;
     private float timer;
+    private AudioSource audioSource;
 
 
     private void Awake() {
         particles = GetComponentsInChildren<ParticleSystem>();
         ventCovers = GetComponentsInChildren<VentCover>();
+        audioSource = GetComponent<AudioSource>();
 
         foreach (ParticleSystem particle in particles)
             particle.Stop();
@@ -37,6 +39,7 @@ public class SteamVent : MonoBehaviour
             cover.open();
         foreach (ParticleSystem particle in particles)
             particle.Play();
+        audioSource.Play();
     }
 
     public void deactivate() {
@@ -45,6 +48,7 @@ public class SteamVent : MonoBehaviour
             cover.close();
         foreach (ParticleSystem particle in particles)
             particle.Stop();
+        audioSource.Stop();
     }
 
 

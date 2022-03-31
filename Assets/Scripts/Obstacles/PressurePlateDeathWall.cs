@@ -29,7 +29,7 @@ public class PressurePlateDeathWall : MonoBehaviour
                     gameObject.GetComponent<MeshRenderer>().material = originalMat;
                     matChanger = 0;
                 }
-                
+                Sounds.PlaySound(Sounds.Sound.SteamVent_PressurePlate);
             }
         }
     }

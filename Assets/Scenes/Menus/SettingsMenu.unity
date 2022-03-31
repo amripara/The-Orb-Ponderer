@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 188175833}
   - component: {fileID: 188175834}
   m_Layer: 5
-  m_Name: MasterVolume_Slider
+  m_Name: SFXVolume_Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1108,7 +1108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   masterMixer: {fileID: 24100000, guid: 8b61bc31c8990b047ba52a9acd1ded3a, type: 2}
-  masterVolumeSlider: {fileID: 188175834}
+  sfxVolumeSlider: {fileID: 188175834}
 --- !u!4 &2027654980
 Transform:
   m_ObjectHideFlags: 0
@@ -1135,7 +1135,7 @@ GameObject:
   - component: {fileID: 2028085782}
   - component: {fileID: 2028085781}
   m_Layer: 5
-  m_Name: MasterVolume_Text
+  m_Name: SFXVolume_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1180,7 +1180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Master  Volume
+  m_text: SFX  Volume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56e73996c7215dd44b3d9ea50609ca2b, type: 2}
   m_sharedMaterial: {fileID: -6185134862118351830, guid: 56e73996c7215dd44b3d9ea50609ca2b, type: 2}
@@ -1267,7 +1267,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2115380066}
   m_Layer: 5
-  m_Name: MasterVolumeSetting
+  m_Name: SFXVolumeSetting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

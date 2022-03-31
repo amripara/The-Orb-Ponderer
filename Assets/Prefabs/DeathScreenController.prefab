@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c7163e655c61141963084c1b2e30c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textWaitTime: 1
+  textWaitTime: 1.2
   deathText: {fileID: 8607976401818855495}
 --- !u!1 &8607976401197401651
 GameObject:
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190313
-  m_fontColor: {r: 0, g: 0.8784314, b: 1, a: 1}
+  m_fontColor: {r: 1, g: 0.00000009735425, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
