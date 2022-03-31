@@ -16,12 +16,15 @@ public class PlayerController : MonoBehaviour
     private AudioSource audioSource;
     private bool running = true;
 
+
     //Key Pieces
     //private int count;
     private int count_level;
     //public GameObject winTextObject;
     public GameObject nextLevelTextObject;
     public GameObject failTextObject;
+    private TabletStatus tabletStatus;
+    [SerializeField] private GameObject TabletStatus;
 
     //Death
     // public GameObject loseTextObject;
@@ -114,6 +117,7 @@ public class PlayerController : MonoBehaviour
         _instance = this;
         defaultFixedDeltaTime = Time.fixedDeltaTime;
         Sounds.Initialize();
+        tabletStatus = TabletStatus.GetComponent<TabletStatus>();
     }
 
     // Start is called before the first frame update
@@ -351,6 +355,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("KeyStone"))
         {
             other.gameObject.SetActive(false);
+            tabletStatus.UpdateImage(other.gameObject);
             Sounds.PlaySound(Sounds.Sound.Item_Pickup);
             count_level++;
             CheckCount_level();
@@ -358,6 +363,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("KeyPiece"))
         {
             other.gameObject.SetActive(false);
+            tabletStatus.UpdateImage(other.gameObject);
             Sounds.PlaySound(Sounds.Sound.Item_Pickup);
             //count++;
             count_level++;
