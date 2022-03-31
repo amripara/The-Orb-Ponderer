@@ -395,7 +395,7 @@ public class PlayerController : MonoBehaviour
     /// This simply toggles speedBoostIsActive. FixedUpdate accounts for this to decide
     /// how quickly the player moves.
     /// </summary>
-    private IEnumerator SpeedBoost()
+    public IEnumerator SpeedBoost()
     {
         speedBoostIsActive = true;
         yield return new WaitForSeconds(speedBoostDuration);
@@ -404,7 +404,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Operates identically to the SpeedBoost method.
     /// </summary>
-    private IEnumerator JumpBoost()
+    public IEnumerator JumpBoost()
     {
         jumpBoostIsActive = true;
         yield return new WaitForSeconds(jumpBoostDuration);

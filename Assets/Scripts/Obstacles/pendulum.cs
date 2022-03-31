@@ -41,9 +41,9 @@ public class pendulum : MonoBehaviour
 
     private bool killingPlayer = false;
     
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" && !killingPlayer) {
+        if (other.tag == "Player" && !killingPlayer) {
             killingPlayer = true;
             playerScript.KillPlayer();
         }
