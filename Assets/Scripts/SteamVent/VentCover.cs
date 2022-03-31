@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class VentCover : MonoBehaviour
 {
-    private int angle = 60;
+    private int angle = 70;
 
     public void open() {
-        transform.RotateAround(transform.position, -Vector3.forward, angle);
+        transform.RotateAround(transform.position, Vector3.forward, angle);
     }
 
     public void close() {
-        transform.RotateAround(transform.position, Vector3.forward, angle);
+        transform.RotateAround(transform.position, -Vector3.forward, angle);
     }
 }

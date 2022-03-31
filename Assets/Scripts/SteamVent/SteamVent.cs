@@ -21,6 +21,7 @@ public class SteamVent : MonoBehaviour
 
         foreach (ParticleSystem particle in particles)
             particle.Stop();
+
     }
 
     private void Update() {
