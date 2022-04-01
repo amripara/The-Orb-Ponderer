@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public AudioMixer masterMixer;
-    public Slider sfxVolumeSlider;
+    public AudioMixer sfxMixer, musicMixer;
+    public Slider sfxVolumeSlider, musicVolumeSlider;
     
     private PlayerSettings playerSettingsScript = null;
     
@@ -15,11 +15,18 @@ public class SettingsMenu : MonoBehaviour
     {
         playerSettingsScript = GameObject.Find("PlayerSettings").GetComponent<PlayerSettings>();
         sfxVolumeSlider.value = playerSettingsScript.GetSFXVolume();
+        musicVolumeSlider.value = playerSettingsScript.GetMusicVolume();
     }
 
-    public void SetMasterVolume ()
+    public void SetSFXVolume ()
     {
         playerSettingsScript.SetSFXVolume(sfxVolumeSlider.value);
-        masterMixer.SetFloat("MasterVol", Mathf.Log10(sfxVolumeSlider.value) * 20);
+        sfxMixer.SetFloat("MasterVol", Mathf.Log10(sfxVolumeSlider.value) * 20);
+    }
+
+    public void SetMusicVolume ()
+    {
+        playerSettingsScript.SetMusicVolume(musicVolumeSlider.value);
+        musicMixer.SetFloat("MasterVol", Mathf.Log10(musicVolumeSlider.value) * 20);
     }
 }

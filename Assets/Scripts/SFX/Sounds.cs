@@ -34,7 +34,9 @@ public static class Sounds
 
         // MISC
         Win_Sound,
-        Lose_Sound
+        Lose_Sound,
+        Start_Game,
+        Menu_Click
     }
 
     private static Dictionary<Sound, float> soundTimerDictionary;
@@ -50,16 +52,18 @@ public static class Sounds
         active = true;
     }
 
-    public static void PlaySound(Sound sound)
+    public static async void PlaySound(Sound sound)
     {
         if (CanPlaySound(sound)) {
             if (oneShotGameObject == null) {
                 oneShotGameObject = new GameObject("One Shot Sound");
                 oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
                 oneShotAudioSource.outputAudioMixerGroup = SoundManager.GetSoundManager().sfxVolMixer;
+                Object.DontDestroyOnLoad(oneShotAudioSource);
             }
-            if (active || (sound == Sound.Win_Sound || sound == Sound.Lose_Sound)) {
+            if (active || (sound == Sound.Win_Sound || sound == Sound.Lose_Sound || sound == Sound.Start_Game || sound == Sound.Menu_Click)) {
                 oneShotAudioSource.PlayOneShot(GetAudioClip(sound));
+                //DestroyOneShot(oneShotGameObject);
             }
         }
     }
@@ -89,5 +93,11 @@ public static class Sounds
             audioS.Stop();
             active = false;
         }
+    }
+
+    private static IEnumerator DestroyOneShot(GameObject obj)
+    {
+        yield return new WaitForSeconds(2.5f);
+        Object.Destroy(obj);
     }
 }

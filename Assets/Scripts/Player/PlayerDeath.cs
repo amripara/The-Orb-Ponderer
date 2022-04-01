@@ -6,13 +6,15 @@ using UnityEngine.SceneManagement;
 public class PlayerDeath : MonoBehaviour
 {
     public float textWaitTime; // how long it takes for the death screen text and buttons to fade in
-
     public GameObject deathText;
+
+    private MusicManager musicManagerScript;
     
     void OnEnable() 
     {
         Debug.Log("start death");
         StartCoroutine(DeathScreen());
+        musicManagerScript = GameObject.Find("MusicManager").GetComponent<MusicManager>();
     }
 
     IEnumerator DeathScreen()
@@ -20,18 +22,22 @@ public class PlayerDeath : MonoBehaviour
         Sounds.StopAllAudio();
         yield return new WaitForSeconds(textWaitTime);
         deathText.SetActive(true);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.15f);
         Sounds.PlaySound(Sounds.Sound.Lose_Sound);
     }
 
     public void ReloadLevel()
     {
+        Sounds.PlaySound(Sounds.Sound.Start_Game);
+        musicManagerScript.SetMusic(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
-    public void QuitGame()
+    public void ReturnToStartMenu()
     {
-        Application.Quit();
+        Sounds.PlaySound(Sounds.Sound.Menu_Click);
+        musicManagerScript.SetMusic(0);
+        SceneManager.LoadScene("StartMenu");
     }
 
 }
