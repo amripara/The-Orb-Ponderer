@@ -32,4 +32,13 @@ public class MusicManager : MonoBehaviour
         }
         musicSource.Play();
     }
+
+    public void PlayMusic(bool value)
+    {
+        if (value) {
+            musicSource.Play();
+        } else {
+            musicSource.Stop();
+        }
+    }
 }

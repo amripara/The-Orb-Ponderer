@@ -48,7 +48,7 @@ public static class Sounds
     public static void Initialize()
     {
         soundTimerDictionary = new Dictionary<Sound, float>();
-        allAudioSources = Resources.FindObjectsOfTypeAll(typeof(AudioSource)) as AudioSource[];
+        //allAudioSources = Resources.FindObjectsOfTypeAll(typeof(AudioSource)) as AudioSource[];
         active = true;
     }
 
@@ -89,6 +89,7 @@ public static class Sounds
 
     public static void StopAllAudio()
     {
+        allAudioSources = Resources.FindObjectsOfTypeAll(typeof(AudioSource)) as AudioSource[];
         foreach (AudioSource audioS in allAudioSources) {
             audioS.Stop();
             active = false;

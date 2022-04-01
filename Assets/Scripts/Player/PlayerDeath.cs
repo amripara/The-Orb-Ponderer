@@ -13,13 +13,14 @@ public class PlayerDeath : MonoBehaviour
     void OnEnable() 
     {
         Debug.Log("start death");
-        StartCoroutine(DeathScreen());
         musicManagerScript = GameObject.Find("MusicManager").GetComponent<MusicManager>();
+        StartCoroutine(DeathScreen());
     }
 
     IEnumerator DeathScreen()
     {
-        Sounds.StopAllAudio();
+        //Sounds.StopAllAudio();
+        musicManagerScript.PlayMusic(false);
         yield return new WaitForSeconds(textWaitTime);
         deathText.SetActive(true);
         yield return new WaitForSeconds(0.15f);
