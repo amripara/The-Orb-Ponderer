@@ -23,7 +23,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Amri/Level 11.unity
     guid: 54f84b301fbbb894a886c10892a2665e
+  - enabled: 0
+    path: Assets/Scenes/Main/Level 1 Old.unity
+    guid: d12133c2b11a1344491ccc30dbdc547d
   - enabled: 1
     path: Assets/Scenes/Main/Level 1.unity
-    guid: d12133c2b11a1344491ccc30dbdc547d
+    guid: 8839c7b9d21e56744b72244d51515a88
   m_configObjects: {}
