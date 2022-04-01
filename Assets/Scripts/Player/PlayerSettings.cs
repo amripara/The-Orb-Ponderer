@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class PlayerSettings : MonoBehaviour
 {
     private static PlayerSettings instance = null;
-    private static float sfxVolumeValue = 0.75f;
+    private static float sfxVolumeValue = 0.75f, musicVolumeValue = 0.5f;
 
-     void Awake()
+    void Awake()
     {
         DontDestroyOnLoad(this);
         if (instance == null)
@@ -20,7 +20,7 @@ public class PlayerSettings : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(sfxVolumeValue);
+        //Debug.Log(sfxVolumeValue);
     }
 
     public float GetSFXVolume()
@@ -28,8 +28,18 @@ public class PlayerSettings : MonoBehaviour
         return sfxVolumeValue;
     }
 
+    public float GetMusicVolume()
+    {
+        return musicVolumeValue;
+    }
+
     public void SetSFXVolume(float value)
     {
         sfxVolumeValue = value;
+    }
+
+    public void SetMusicVolume(float value)
+    {
+        musicVolumeValue = value;
     }
 }
