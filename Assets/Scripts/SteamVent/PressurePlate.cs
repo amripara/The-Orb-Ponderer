@@ -14,28 +14,29 @@ public class PressurePlate : MonoBehaviour
 
     private void Awake() {
         vent = ventGameObject.GetComponent<SteamVent>();
-        initial = playerCam.transform.rotation;
+        initial = playerCam.transform.localRotation;
     }
 
     // Changes camera view to inform the player it is an elevator, not a trap
-    private void Update()
+    private void FixedUpdate()
     {   
-        Debug.Log(timer);
+
+        //Debug.Log(-gameObject.transform.forward);
         if (enteredFromFront) {
             if (timer > 0) {
                 timer -= Time.deltaTime;
                 if (timer >= 1.0f) {
                     Debug.Log("look up" + timer);
                     playerCam.transform.Rotate(Vector3.left, 30.0f * Time.deltaTime);
-                } else if (timer >= 0f && playerCam.transform.position.x > initial.x) {
+                } else if (timer >= 0f) {
                     Debug.Log("look down" + timer);
-                    playerCam.transform.Rotate(Vector3.right, 30.0f * Time.deltaTime);
+                    playerCam.transform.Rotate(Vector3.right, 60.0f * Time.deltaTime);
                 }
                 if (timer <= 0f) {
                     Debug.Log("stop");
                     enteredFromFront = false;
                     timer = 2.5f;
-                    playerCam.transform.rotation = initial;
+                    playerCam.transform.localRotation = initial;
                 }
             }
         }   
@@ -43,8 +44,9 @@ public class PressurePlate : MonoBehaviour
 
     private void OnCollisionStay(Collision other) {
         if (other.gameObject.tag == "Player") {
-            Debug.Log(other.gameObject.transform.position.z + " " + transform.position.z);
-            if (playerCam.transform.position.z < transform.position.z + 1) {
+            //Debug.Log(other.gameObject.transform.forward);
+            //Debug.Log(Vector3.Dot(other.gameObject.transform.forward, gameObject.transform.forward));
+            if (Mathf.Ceil(Vector3.Dot(other.gameObject.transform.forward, gameObject.transform.forward)) == 1) {
                 timer = 2.5f;
                 enteredFromFront = true;
                 Debug.Log("entered from the front");

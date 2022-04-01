@@ -12,6 +12,7 @@ public class SteamVent : MonoBehaviour
     public VentCover[] ventCovers;
     private float timer;
     private AudioSource audioSource;
+    private Rigidbody player;
 
 
     private void Awake() {
@@ -27,6 +28,10 @@ public class SteamVent : MonoBehaviour
     private void Update() {
         if (timer > 0) {
             timer -= Time.deltaTime;
+            if (timer <= 0.2 && player != null)
+            {
+                player.AddForce(player.transform.forward * speed_forward);
+            }
             if (timer <= 0f) {
                 deactivate();
             }
@@ -55,6 +60,7 @@ public class SteamVent : MonoBehaviour
     private void OnTriggerStay(Collider other) {
         timer = 1f;
         if (activated && other.attachedRigidbody) {
+            player = other.attachedRigidbody;
             other.attachedRigidbody.AddForce(Vector3.up * speed_up);
             other.attachedRigidbody.AddForce(other.transform.forward * speed_forward);
         }

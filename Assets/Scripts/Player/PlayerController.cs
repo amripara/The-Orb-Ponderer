@@ -388,9 +388,12 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(count_level);
         if (count_level >= 3)
         {
-            nextLevelTextObject.SetActive(true);
+            //nextLevelTextObject.SetActive(true);
             //count_level = 0;
             //Debug.Log("won");
+            failTextObject.SetActive(true);
+            Text textComponent = failTextObject.GetComponentInChildren<Text>();
+            textComponent.text = count_level + "/3 runes gathered!";
             return true;
         } else if (count_level < 0)
         {
