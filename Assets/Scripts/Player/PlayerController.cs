@@ -7,12 +7,15 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public PlayerInput playerInput;
-    [SerializeField] GameObject playerCam;
+    [SerializeField] private GameObject playerCam;
+    [SerializeField] private GameObject playerArms;
     private Vector3 camPos;
+    private Vector3 armPos;
     private Rigidbody rb;
     private CapsuleCollider capsule;
     private AudioSource audioSource;
     private bool running = true;
+
 
     //Key Pieces
     //private int count;
@@ -20,6 +23,8 @@ public class PlayerController : MonoBehaviour
     //public GameObject winTextObject;
     public GameObject nextLevelTextObject;
     public GameObject failTextObject;
+    private TabletStatus tabletStatus;
+    [SerializeField] private GameObject TabletStatus;
 
     //Death
     // public GameObject loseTextObject;
@@ -112,12 +117,14 @@ public class PlayerController : MonoBehaviour
         _instance = this;
         defaultFixedDeltaTime = Time.fixedDeltaTime;
         Sounds.Initialize();
+        tabletStatus = TabletStatus.GetComponent<TabletStatus>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         camPos = playerCam.transform.localPosition;
+        armPos = playerArms.transform.localPosition;
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         //count = 0;
@@ -134,6 +141,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         playerCam.transform.localPosition = camPos;
+        playerArms.transform.localPosition = armPos;
         HandleInput();
         #region Time Slow
         if (!TimeSlowIsActive)
@@ -254,6 +262,7 @@ public class PlayerController : MonoBehaviour
             if (playerInput.actions["Restart"].WasPerformedThisFrame())
             {
                 PlayerDeath pd = deathController.GetComponent<PlayerDeath>();
+                TimeSlowIsActive = false;
                 pd.ReloadLevel();
             }
         }
@@ -346,6 +355,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("KeyStone"))
         {
             other.gameObject.SetActive(false);
+            tabletStatus.UpdateImage(other.gameObject);
             Sounds.PlaySound(Sounds.Sound.Item_Pickup);
             count_level++;
             CheckCount_level();
@@ -353,6 +363,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("KeyPiece"))
         {
             other.gameObject.SetActive(false);
+            tabletStatus.UpdateImage(other.gameObject);
             Sounds.PlaySound(Sounds.Sound.Item_Pickup);
             //count++;
             count_level++;
@@ -377,9 +388,12 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(count_level);
         if (count_level >= 3)
         {
-            nextLevelTextObject.SetActive(true);
+            //nextLevelTextObject.SetActive(true);
             //count_level = 0;
             //Debug.Log("won");
+            failTextObject.SetActive(true);
+            Text textComponent = failTextObject.GetComponentInChildren<Text>();
+            textComponent.text = count_level + "/3 runes gathered!";
             return true;
         } else if (count_level < 0)
         {
@@ -424,7 +438,7 @@ public class PlayerController : MonoBehaviour
     /// This simply toggles speedBoostIsActive. FixedUpdate accounts for this to decide
     /// how quickly the player moves.
     /// </summary>
-    private IEnumerator SpeedBoost()
+    public IEnumerator SpeedBoost()
     {
         speedBoostIsActive = true;
         yield return new WaitForSeconds(speedBoostDuration);
@@ -433,7 +447,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Operates identically to the SpeedBoost method.
     /// </summary>
-    private IEnumerator JumpBoost()
+    public IEnumerator JumpBoost()
     {
         jumpBoostIsActive = true;
         yield return new WaitForSeconds(jumpBoostDuration);
