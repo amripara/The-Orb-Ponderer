@@ -6,6 +6,13 @@ using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
+    
+    public static float soundSlowedSpeed;
+    public static bool slowedSound = false;
+    
+    [SerializeField]
+    private float _soundSlowedSpeed = 0.85f;
+
     public AudioMixerGroup sfxVolMixer;
     public SoundAudioClip[] soundAudioClipArray;
     
@@ -17,6 +24,7 @@ public class SoundManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(instance);
         }
+        soundSlowedSpeed = _soundSlowedSpeed;
     }
 
     public static SoundManager GetSoundManager()

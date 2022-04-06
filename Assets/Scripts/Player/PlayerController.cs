@@ -247,9 +247,17 @@ public class PlayerController : MonoBehaviour
             if (playerInput.actions["TimeSlow"].WasPressedThisFrame())
             {
                 TimeSlowIsActive = true;
+                // slow down audio
+                Sounds.PlaySound(Sounds.Sound.TimeSlow_Activate);
+                SoundManager.slowedSound = true;
+                audioSource.pitch = SoundManager.soundSlowedSpeed;
             }
             if (playerInput.actions["TimeSlow"].WasReleasedThisFrame()) {
                 TimeSlowIsActive = false;
+                // return audio to normal speed
+                Sounds.PlaySound(Sounds.Sound.TimeSlow_Deactivate);
+                SoundManager.slowedSound = false;
+                audioSource.pitch = 1f;
             }
             //Camera movement
             //Debug.Log(playerInput.actions["Look"].ReadValue<Vector2>());

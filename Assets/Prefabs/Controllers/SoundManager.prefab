@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bd34ece2017694db38f6d8dd8735de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _soundSlowedSpeed: 0.85
   sfxVolMixer: {fileID: 24300002, guid: 8b61bc31c8990b047ba52a9acd1ded3a, type: 2}
   soundAudioClipArray:
   - sound: 0
@@ -82,10 +83,14 @@ MonoBehaviour:
   - sound: 17
     audioClip: {fileID: 8300000, guid: 7edc8ad3d8c709248b3c01cd19baa4e3, type: 3}
   - sound: 18
-    audioClip: {fileID: 8300000, guid: 0f0dea22156217a49b367fd9839078b5, type: 3}
+    audioClip: {fileID: 8300000, guid: d60ac37c449c0af4f9d03d14bbb80ace, type: 3}
   - sound: 19
-    audioClip: {fileID: 8300000, guid: 26927d84bc1708540b5ac9ced289edc3, type: 3}
+    audioClip: {fileID: 8300000, guid: 74b5114e4061ab54bab2a6aaffd12dca, type: 3}
   - sound: 20
-    audioClip: {fileID: 8300000, guid: e56be654598619c42b448fc5c3d62be6, type: 3}
+    audioClip: {fileID: 8300000, guid: 0f0dea22156217a49b367fd9839078b5, type: 3}
   - sound: 21
+    audioClip: {fileID: 8300000, guid: 26927d84bc1708540b5ac9ced289edc3, type: 3}
+  - sound: 22
+    audioClip: {fileID: 8300000, guid: e56be654598619c42b448fc5c3d62be6, type: 3}
+  - sound: 23
     audioClip: {fileID: 8300000, guid: b1ac82197088b4842a0829aa42300a02, type: 3}

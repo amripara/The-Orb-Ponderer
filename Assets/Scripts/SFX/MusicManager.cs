@@ -9,6 +9,7 @@ public class MusicManager : MonoBehaviour
     private AudioSource musicSource;
     private static MusicManager instance = null;
     
+    
     void Awake()
     {
         musicSource = this.GetComponent<AudioSource>();
@@ -17,6 +18,15 @@ public class MusicManager : MonoBehaviour
             instance = this;
         else
             Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        if (SoundManager.slowedSound) {
+            musicSource.pitch = SoundManager.soundSlowedSpeed;
+        } else {
+            musicSource.pitch = 1f; 
+        }
     }
 
     public void SetMusic(int trackNum)
@@ -40,5 +50,11 @@ public class MusicManager : MonoBehaviour
         } else {
             musicSource.Stop();
         }
+    }
+
+    public void ChangeMusicSpeed(float speed)
+    {
+        musicSource.pitch = speed;
+        musicSource.outputAudioMixerGroup.audioMixer.SetFloat("Pitch", 1f / speed);
     }
 }

@@ -32,6 +32,12 @@ public static class Sounds
         SteamVent_PressurePlate,
         Item_Pickup,
 
+        // SPELLS //
+
+        // TIME SLOW
+        TimeSlow_Activate,
+        TimeSlow_Deactivate,
+
         // MISC
         Win_Sound,
         Lose_Sound,
@@ -52,7 +58,16 @@ public static class Sounds
         active = true;
     }
 
-    public static async void PlaySound(Sound sound)
+    private static void Update()
+    {
+        if (SoundManager.slowedSound) {
+            oneShotAudioSource.pitch = SoundManager.soundSlowedSpeed;
+        } else {
+            oneShotAudioSource.pitch = 1f; 
+        }
+    }
+
+    public static void PlaySound(Sound sound)
     {
         if (CanPlaySound(sound)) {
             if (oneShotGameObject == null) {
@@ -85,6 +100,12 @@ public static class Sounds
         }
         Debug.LogError("Sound " + sound + " not found!");
         return null;
+    }
+
+    public static void ChangeSFXSpeed(float speed)
+    {
+        oneShotAudioSource.pitch = speed;
+        oneShotAudioSource.outputAudioMixerGroup.audioMixer.SetFloat("Pitch", 1f / speed);
     }
 
     public static void StopAllAudio()
