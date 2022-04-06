@@ -34,9 +34,13 @@ public static class Sounds
 
         // SPELLS //
 
-        // TIME SLOW
+        // TIME SPELL
         TimeSlow_Activate,
         TimeSlow_Deactivate,
+
+        //  SPEED SPELL
+
+        SpeedSpell_Activate,
 
         // MISC
         Win_Sound,

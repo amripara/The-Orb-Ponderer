@@ -449,7 +449,10 @@ public class PlayerController : MonoBehaviour
     public IEnumerator SpeedBoost()
     {
         speedBoostIsActive = true;
+        Sounds.PlaySound(Sounds.Sound.SpeedSpell_Activate);
+        audioSource.pitch = SoundManager.runningSoundSpeed;
         yield return new WaitForSeconds(speedBoostDuration);
+        audioSource.pitch = 1f;
         speedBoostIsActive = false;
     }
     /// <summary>

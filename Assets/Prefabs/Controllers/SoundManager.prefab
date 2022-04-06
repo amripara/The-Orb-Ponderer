@@ -87,10 +87,12 @@ MonoBehaviour:
   - sound: 19
     audioClip: {fileID: 8300000, guid: 74b5114e4061ab54bab2a6aaffd12dca, type: 3}
   - sound: 20
-    audioClip: {fileID: 8300000, guid: 0f0dea22156217a49b367fd9839078b5, type: 3}
+    audioClip: {fileID: 8300000, guid: 7207c80b4e98e1d4ba03e9fd1391f6db, type: 3}
   - sound: 21
-    audioClip: {fileID: 8300000, guid: 26927d84bc1708540b5ac9ced289edc3, type: 3}
+    audioClip: {fileID: 8300000, guid: 0f0dea22156217a49b367fd9839078b5, type: 3}
   - sound: 22
-    audioClip: {fileID: 8300000, guid: e56be654598619c42b448fc5c3d62be6, type: 3}
+    audioClip: {fileID: 8300000, guid: 26927d84bc1708540b5ac9ced289edc3, type: 3}
   - sound: 23
+    audioClip: {fileID: 8300000, guid: e56be654598619c42b448fc5c3d62be6, type: 3}
+  - sound: 24
     audioClip: {fileID: 8300000, guid: b1ac82197088b4842a0829aa42300a02, type: 3}
