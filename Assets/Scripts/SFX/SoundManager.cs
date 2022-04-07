@@ -8,10 +8,13 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
     
     public static float soundSlowedSpeed;
+    public static float runningSoundSpeed;
     public static bool slowedSound = false;
     
     [SerializeField]
     private float _soundSlowedSpeed = 0.85f;
+    [SerializeField]
+    private float _runningSoundSpeed = 1.2f;
 
     public AudioMixerGroup sfxVolMixer;
     public SoundAudioClip[] soundAudioClipArray;
@@ -25,6 +28,7 @@ public class SoundManager : MonoBehaviour
             DontDestroyOnLoad(instance);
         }
         soundSlowedSpeed = _soundSlowedSpeed;
+        runningSoundSpeed = _runningSoundSpeed;
     }
 
     public static SoundManager GetSoundManager()
