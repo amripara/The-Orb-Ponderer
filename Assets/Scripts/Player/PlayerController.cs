@@ -265,17 +265,11 @@ public class PlayerController : MonoBehaviour
             if (playerInput.actions["TimeSlow"].WasPressedThisFrame())
             {
                 TimeSlowIsActive = true;
-                // slow down audio
-                Sounds.PlaySound(Sounds.Sound.TimeSlow_Activate);
-                SoundManager.slowedSound = true;
-                audioSource.pitch = SoundManager.soundSlowedSpeed;
+                ChangeAudioSpeed(SoundManager.soundSlowedSpeed, true);
             }
             if (playerInput.actions["TimeSlow"].WasReleasedThisFrame()) {
                 TimeSlowIsActive = false;
-                // return audio to normal speed
-                Sounds.PlaySound(Sounds.Sound.TimeSlow_Deactivate);
-                SoundManager.slowedSound = false;
-                audioSource.pitch = 1f;
+                ChangeAudioSpeed(1f, false);
             }
             //Camera movement
             //Debug.Log(playerInput.actions["Look"].ReadValue<Vector2>());
@@ -289,6 +283,7 @@ public class PlayerController : MonoBehaviour
             {
                 PlayerDeath pd = deathController.GetComponent<PlayerDeath>();
                 TimeSlowIsActive = false;
+                ChangeAudioSpeed(1f, false);
                 pd.ReloadLevel();
             }
         }
@@ -407,6 +402,17 @@ public class PlayerController : MonoBehaviour
             Debug.Log("bonk");
             KillPlayer();
         }
+    }
+
+    private void ChangeAudioSpeed(float speed, bool status)
+    {
+        if (status) {
+            Sounds.PlaySound(Sounds.Sound.TimeSlow_Activate);
+        } else {
+            Sounds.PlaySound(Sounds.Sound.TimeSlow_Deactivate);
+        }
+        SoundManager.slowedSound = status;
+        audioSource.pitch = speed;
     }
 
 
