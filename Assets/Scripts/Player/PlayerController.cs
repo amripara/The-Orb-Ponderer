@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider capsule;
     private AudioSource audioSource;
     private bool running = true;
-
+    private bool isPaused = false;
 
     //Key Pieces
     //private int count;
@@ -155,7 +155,10 @@ public class PlayerController : MonoBehaviour
                 TimeSlowIsActive = false;
             }
         }
-        TimeSlowMeterManager.Instance.UpdateMeter(timeSlowDurationRemaining, timeSlowMaxDuration);
+        if (!isPaused)
+        {
+            TimeSlowMeterManager.Instance.UpdateMeter(timeSlowDurationRemaining, timeSlowMaxDuration);
+        }
         #endregion
     }
 
@@ -166,6 +169,21 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDead)
         {
+            //Pausing
+            if (playerInput.actions["Pause"].WasPerformedThisFrame())
+            {
+                if (!isPaused)
+                {
+                    Time.timeScale = 0f;
+                    isPaused = true;
+                } else if (isPaused)
+                {
+                    Time.timeScale = 1.0f;
+                    TimeSlowIsActive = false;
+                    isPaused = false;
+                }
+                
+            }
             if (playerInput.actions["Left"].WasPerformedThisFrame() && !isTurning)
             {
                 fromDirection = transform.rotation;
