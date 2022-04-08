@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public PlayerInput playerInput;
     [SerializeField] private GameObject playerCam;
+    PlayerCamPhys camPhys;
     [SerializeField] private GameObject playerArms;
     private Vector3 camPos;
     private Vector3 armPos;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private AudioSource audioSource;
     private bool running = true;
     private bool isPaused = false;
+    private MusicManager musicManagerScript;
 
     //Key Pieces
     //private int count;
@@ -118,6 +120,8 @@ public class PlayerController : MonoBehaviour
         defaultFixedDeltaTime = Time.fixedDeltaTime;
         Sounds.Initialize();
         tabletStatus = TabletStatus.GetComponent<TabletStatus>();
+        camPhys = playerCam.GetComponent<PlayerCamPhys>();
+        musicManagerScript = GameObject.Find("MusicManager").GetComponent<MusicManager>();
     }
 
     // Start is called before the first frame update
@@ -174,13 +178,24 @@ public class PlayerController : MonoBehaviour
             {
                 if (!isPaused)
                 {
+                    camPhys.SwapDoFMode(isPaused);
                     Time.timeScale = 0f;
                     isPaused = true;
+                    audioSource.Stop();
+                    Sounds.PauseAllAudio(isPaused);
+                    musicManagerScript.PauseMusic(isPaused);
                 } else if (isPaused)
                 {
+                    camPhys.SwapDoFMode(isPaused);
                     Time.timeScale = 1.0f;
                     TimeSlowIsActive = false;
                     isPaused = false;
+                    if (IsGrounded)
+                    {
+                        audioSource.Play();
+                    }
+                    Sounds.PauseAllAudio(isPaused);
+                    musicManagerScript.PauseMusic(isPaused);
                 }
                 
             }

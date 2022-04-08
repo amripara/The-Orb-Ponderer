@@ -121,6 +121,25 @@ public static class Sounds
         }
     }
 
+    public static void PauseAllAudio(bool isPaused)
+    {
+        allAudioSources = Resources.FindObjectsOfTypeAll(typeof(AudioSource)) as AudioSource[];
+        if (isPaused)
+        {
+            foreach (AudioSource audioS in allAudioSources)
+            {
+                audioS.Pause();
+            }
+        } else if (!isPaused)
+        {
+            foreach (AudioSource audioS in allAudioSources)
+            {
+                audioS.UnPause();
+            }
+        }
+        
+    }
+
     private static IEnumerator DestroyOneShot(GameObject obj)
     {
         yield return new WaitForSeconds(2.5f);

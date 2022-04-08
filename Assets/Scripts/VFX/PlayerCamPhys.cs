@@ -29,6 +29,8 @@ public class PlayerCamPhys : MonoBehaviour
     [SerializeField] 
     Material mat;
 
+    private DepthOfField dof;
+
     enum TLerpFormula
     {
         linear,
@@ -43,7 +45,7 @@ public class PlayerCamPhys : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        cvs.m_Profile.TryGet<DepthOfField>(out dof);
     }
 
     // Update is called once per frame
@@ -102,8 +104,17 @@ public class PlayerCamPhys : MonoBehaviour
             fg.intensity.value = (1f - t) * fg0;
         }
 
-
         mat.SetFloat("_T", t);
     }
 
+    public void SwapDoFMode(bool isPaused)
+    {
+        if (!isPaused)
+        {
+            dof.focusDistance.value = 0f;
+        } else if (isPaused)
+        {
+            dof.focusDistance.value = 5f; ;
+        }
+    }
 }

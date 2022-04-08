@@ -57,4 +57,16 @@ public class MusicManager : MonoBehaviour
         musicSource.pitch = speed;
         musicSource.outputAudioMixerGroup.audioMixer.SetFloat("Pitch", 1f / speed);
     }
+
+    public void PauseMusic(bool isPaused)
+    {
+        if (isPaused)
+        {
+            musicSource.Pause();
+        } else if (!isPaused)
+        {
+            Debug.Log("g");
+            musicSource.UnPause();
+        }      
+    }
 }
