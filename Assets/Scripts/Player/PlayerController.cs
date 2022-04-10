@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private AudioSource audioSource;
     private bool running = true;
     private bool isPaused = false;
+    private PauseMenu pMenu;
     private MusicManager musicManagerScript;
 
     //Key Pieces
@@ -122,6 +123,7 @@ public class PlayerController : MonoBehaviour
         tabletStatus = TabletStatus.GetComponent<TabletStatus>();
         camPhys = playerCam.GetComponent<PlayerCamPhys>();
         musicManagerScript = GameObject.Find("MusicManager").GetComponent<MusicManager>();
+        pMenu = GameObject.Find("Canvas").GetComponent<PauseMenu>();
     }
 
     // Start is called before the first frame update
@@ -139,6 +141,7 @@ public class PlayerController : MonoBehaviour
         originalHeight = capsule.height;
         audioSource = GetComponent<AudioSource>();
         audioSource.Play();
+        //camPhys.SwapDoFMode(isPaused);
     }
 
     // Update is called once per frame
@@ -176,27 +179,7 @@ public class PlayerController : MonoBehaviour
             //Pausing
             if (playerInput.actions["Pause"].WasPerformedThisFrame())
             {
-                if (!isPaused)
-                {
-                    camPhys.SwapDoFMode(isPaused);
-                    Time.timeScale = 0f;
-                    isPaused = true;
-                    audioSource.Stop();
-                    Sounds.PauseAllAudio(isPaused);
-                    musicManagerScript.PauseMusic(isPaused);
-                } else if (isPaused)
-                {
-                    camPhys.SwapDoFMode(isPaused);
-                    Time.timeScale = 1.0f;
-                    TimeSlowIsActive = false;
-                    isPaused = false;
-                    if (IsGrounded)
-                    {
-                        audioSource.Play();
-                    }
-                    Sounds.PauseAllAudio(isPaused);
-                    musicManagerScript.PauseMusic(isPaused);
-                }
+                TogglePause();
                 
             }
             if (playerInput.actions["Left"].WasPerformedThisFrame() && !isTurning)
@@ -247,7 +230,7 @@ public class PlayerController : MonoBehaviour
                 Sounds.PlaySound(Sounds.Sound.Player_Death_Fall);
                 KillPlayer();
             }
-            if (playerInput.actions["Slide"].WasPerformedThisFrame() && rb.velocity.y <= 0 && !isSliding)
+            if (playerInput.actions["Slide"].WasPerformedThisFrame() && rb.velocity.y <= 1 && !isSliding)
             {
                 isSliding = true;
                 stopSlide = false;
@@ -502,6 +485,30 @@ public class PlayerController : MonoBehaviour
         jumpBoostIsActive = true;
         yield return new WaitForSeconds(jumpBoostDuration);
         jumpBoostIsActive = false;
+    }
+
+    public void TogglePause()
+    {
+        if (!isPaused)
+        {
+            Time.timeScale = 0f;
+            isPaused = true;
+            audioSource.Stop();
+        }
+        else if (isPaused)
+        {
+            Time.timeScale = 1.0f;
+            TimeSlowIsActive = false;
+            isPaused = false;
+            if (IsGrounded)
+            {
+                audioSource.Play();
+            }
+        }
+        Sounds.PauseAllAudio(isPaused);
+        musicManagerScript.PauseMusic(isPaused);
+        pMenu.SwapGUI(isPaused);
+        camPhys.SwapDoFMode(isPaused);
     }
 
 }

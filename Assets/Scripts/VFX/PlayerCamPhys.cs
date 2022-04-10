@@ -109,10 +109,10 @@ public class PlayerCamPhys : MonoBehaviour
 
     public void SwapDoFMode(bool isPaused)
     {
-        if (!isPaused)
+        if (isPaused)
         {
             dof.focusDistance.value = 0f;
-        } else if (isPaused)
+        } else if (!isPaused)
         {
             dof.focusDistance.value = 5f; ;
         }
