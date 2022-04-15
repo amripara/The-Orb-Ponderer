@@ -205,6 +205,8 @@ public class PlayerController : MonoBehaviour
             }
             if (playerInput.actions["Jump"].WasPressedThisFrame() && isGrounded) // Jumping
             {
+                Animator anim = playerArms.GetComponent<Animator>();
+                anim.enabled = false;
                 if (jumpBoostIsActive)
                 {
                     rb.AddForce(Vector3.up * 5 * jumpBoostForceMultiplier, ForceMode.VelocityChange);
@@ -296,8 +298,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Animator anim = playerArms.GetComponent<Animator>();
         if (wonGame)
         {
+            anim.enabled = false;
             winTimer -= Time.deltaTime;
         }
         if (winTimer < 0)
@@ -352,6 +356,7 @@ public class PlayerController : MonoBehaviour
             }
             if (!running) {
                 running = true;
+                anim.enabled = true;
                 audioSource.Play();
             }
         }
@@ -373,6 +378,7 @@ public class PlayerController : MonoBehaviour
             {
                 slideInterpolate = 1;
             }
+            anim.enabled = false;
         }
         RaycastHit hit;
         if (!Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
@@ -426,6 +432,8 @@ public class PlayerController : MonoBehaviour
             wonGame = true;
 
             //Pause Arm animations
+            Animator anim = playerArms.GetComponent<Animator>();
+            //anim.SetBool(Grounded, true);
 
             //Start a timer
             winTimer = 2;
