@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -311,6 +312,11 @@ public class PlayerController : MonoBehaviour
             cameraPanTimer -= Time.deltaTime;
             Debug.Log(cameraPanTimer);
             playerCam.transform.Rotate(Vector3.left, 30.0f * Time.deltaTime);
+        } else if (cameraPanTimer < 0)
+        {
+            cameraPan = false;
+            musicManagerScript.PauseMusic(true);
+            SceneManager.LoadScene("End Cutscene");
         }
 
 
