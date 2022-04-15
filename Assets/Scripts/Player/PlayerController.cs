@@ -569,4 +569,8 @@ public class PlayerController : MonoBehaviour
         camPhys.SwapDoFMode(isPaused);
     }
 
+    public void SpeedBoostTrigger()
+    {
+        StartCoroutine(SpeedBoost());
+    }
 }
