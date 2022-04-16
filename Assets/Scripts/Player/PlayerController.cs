@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     private bool isPaused = false;
     private PauseMenu pMenu;
     private MusicManager musicManagerScript;
+    [SerializeField] private bool tutorialMode = false;
+    private Vector3 tpSpot;
+    private Quaternion origRot;
 
     //Win Handling
     private bool wonGame = false;
@@ -127,10 +130,14 @@ public class PlayerController : MonoBehaviour
         _instance = this;
         defaultFixedDeltaTime = Time.fixedDeltaTime;
         Sounds.Initialize();
-        tabletStatus = TabletStatus.GetComponent<TabletStatus>();
+        if (TabletStatus != null)
+        {
+            tabletStatus = TabletStatus.GetComponent<TabletStatus>();
+        }
         camPhys = playerCam.GetComponent<PlayerCamPhys>();
         musicManagerScript = GameObject.Find("MusicManager").GetComponent<MusicManager>();
         pMenu = GameObject.Find("Canvas").GetComponent<PauseMenu>();
+        origRot = transform.rotation;
     }
 
     // Start is called before the first frame update
@@ -148,6 +155,11 @@ public class PlayerController : MonoBehaviour
         originalHeight = capsule.height;
         audioSource = GetComponent<AudioSource>();
         audioSource.Play();
+        if (tutorialMode)
+        {
+            Debug.Log("lmao");
+            ToggleTutorialPause();
+        }
         //camPhys.SwapDoFMode(isPaused);
     }
 
@@ -269,12 +281,12 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(JumpBoost());
             }
-            if (playerInput.actions["TimeSlow"].WasPressedThisFrame())
+            if (playerInput.actions["TimeSlow"].WasPressedThisFrame() && !isPaused)
             {
                 TimeSlowIsActive = true;
                 ChangeAudioSpeed(SoundManager.soundSlowedSpeed, true);
             }
-            if (playerInput.actions["TimeSlow"].WasReleasedThisFrame()) {
+            if (playerInput.actions["TimeSlow"].WasReleasedThisFrame() && !isPaused) {
                 TimeSlowIsActive = false;
                 ChangeAudioSpeed(1f, false);
             }
@@ -463,6 +475,7 @@ public class PlayerController : MonoBehaviour
 
     private bool CheckCount_level() {
         //Debug.Log(count_level);
+        if (tutorialMode) { return false; }
         if (count_level >= 3)
         {
             //nextLevelTextObject.SetActive(true);
@@ -493,6 +506,24 @@ public class PlayerController : MonoBehaviour
     {
         audioSource.Stop();
         running = false;
+
+        if (tutorialMode)
+        {
+            transform.position = tpSpot;
+            isSliding = false;
+            isTurning = false;
+            rb.velocity = Vector3.zero;
+            int rand = Random.Range(0, 2);
+            if (rand == 0)
+            {
+                Sounds.PlaySound(Sounds.Sound.Player_Death_Grunt1);
+            }
+            else
+            {
+                Sounds.PlaySound(Sounds.Sound.Player_Death_Grunt2);
+            }
+            return;
+        }
 
         if (!isDead) {
             isDead = true;
@@ -564,13 +595,50 @@ public class PlayerController : MonoBehaviour
             }
         }
         Sounds.PauseAllAudio(isPaused);
-        musicManagerScript.PauseMusic(isPaused);
+        if (!tutorialMode)
+        {
+            musicManagerScript.PauseMusic(isPaused);
+        }
         pMenu.SwapGUI(isPaused);
+        camPhys.SwapDoFMode(isPaused);
+    }
+
+    public void ToggleTutorialPause()
+    {
+        if (!isPaused)
+        {
+            Time.timeScale = 0f;
+            isPaused = true;
+            audioSource.Stop();
+        }
+        else if (isPaused)
+        {
+            Time.timeScale = 1.0f;
+            TimeSlowIsActive = false;
+            isPaused = false;
+            if (IsGrounded)
+            {
+                audioSource.Play();
+            }
+        }
+        Sounds.PauseAllAudio(isPaused);
         camPhys.SwapDoFMode(isPaused);
     }
 
     public void SpeedBoostTrigger()
     {
         StartCoroutine(SpeedBoost());
+    }
+
+    public void SetTpSpot(Vector3 vec)
+    {
+        tpSpot = vec;
+    }
+
+    public void TpPlayer()
+    {
+        transform.position = tpSpot;
+        transform.rotation = origRot;
+        ToggleTutorialPause();
     }
 }

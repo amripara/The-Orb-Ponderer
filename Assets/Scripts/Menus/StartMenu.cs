@@ -16,9 +16,9 @@ public class StartMenu : MonoBehaviour
     public void StartGame()
     {
         Sounds.PlaySound(Sounds.Sound.Start_Game);
-        musicManagerScript.SetMusic(1);
+        musicManagerScript.SetMusic(0);
         // TO DO: replace with first gameplay scene
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene("Tuto");
     }
 
     public void GoToSettingsMenu()
@@ -43,5 +43,13 @@ public class StartMenu : MonoBehaviour
     {
         Sounds.PlaySound(Sounds.Sound.Start_Game);
         SceneManager.LoadScene("StartMenu");
+    }
+
+    public void StartActualGame()
+    {
+        Sounds.PlaySound(Sounds.Sound.Start_Game);
+        musicManagerScript.SetMusic(1);
+        // TO DO: replace with first gameplay scene
+        SceneManager.LoadScene("Level 1");
     }
 }
