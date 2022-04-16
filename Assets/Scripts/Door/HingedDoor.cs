@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HingedDoor : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class HingedDoor : MonoBehaviour
             Transform tablet = transform.Find("LDoorFrame").Find("fireTabletEmpty");
             tablet.gameObject.SetActive(true);
             doorCol.enabled = false;
-            winController.SetActive(true);
+            //winController.SetActive(true);
             Sounds.PlaySound(Sounds.Sound.Win_Sound);
         }
     }

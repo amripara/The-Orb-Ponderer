@@ -13,7 +13,9 @@ public class Spell : MonoBehaviour
     public Material Crystal1;
     public Material Crystal2;
 
-    int numOfChildren; 
+    int numOfChildren;
+
+    [SerializeField] private GameObject respawnerObject;
 
     void Start()
     {
@@ -59,15 +61,17 @@ public class Spell : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player") {
+            playerScript = other.GetComponent<PlayerController>();
             gameObject.SetActive(!gameObject.activeSelf);
             if (type == 0) {
-                playerScript.SpeedBoost();
+                playerScript.SpeedBoostTrigger();
             } else if (type == 1) {
                 playerScript.JumpBoost();
             } else {
                 //time slow
             }
-            
+            Respawner respawner = respawnerObject.GetComponent<Respawner>();
+            respawner.ResetTimer();
         }
     }
 }

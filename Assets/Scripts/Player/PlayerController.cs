@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public PlayerInput playerInput;
     [SerializeField] private GameObject playerCam;
+    PlayerCamPhys camPhys;
     [SerializeField] private GameObject playerArms;
     private Vector3 camPos;
     private Vector3 armPos;
@@ -15,7 +17,15 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider capsule;
     private AudioSource audioSource;
     private bool running = true;
+    private bool isPaused = false;
+    private PauseMenu pMenu;
+    private MusicManager musicManagerScript;
 
+    //Win Handling
+    private bool wonGame = false;
+    private float winTimer = 0;
+    private bool cameraPan = false;
+    private float cameraPanTimer = 2;
 
     //Key Pieces
     //private int count;
@@ -118,6 +128,9 @@ public class PlayerController : MonoBehaviour
         defaultFixedDeltaTime = Time.fixedDeltaTime;
         Sounds.Initialize();
         tabletStatus = TabletStatus.GetComponent<TabletStatus>();
+        camPhys = playerCam.GetComponent<PlayerCamPhys>();
+        musicManagerScript = GameObject.Find("MusicManager").GetComponent<MusicManager>();
+        pMenu = GameObject.Find("Canvas").GetComponent<PauseMenu>();
     }
 
     // Start is called before the first frame update
@@ -135,6 +148,7 @@ public class PlayerController : MonoBehaviour
         originalHeight = capsule.height;
         audioSource = GetComponent<AudioSource>();
         audioSource.Play();
+        //camPhys.SwapDoFMode(isPaused);
     }
 
     // Update is called once per frame
@@ -155,7 +169,10 @@ public class PlayerController : MonoBehaviour
                 TimeSlowIsActive = false;
             }
         }
-        TimeSlowMeterManager.Instance.UpdateMeter(timeSlowDurationRemaining, timeSlowMaxDuration);
+        if (!isPaused)
+        {
+            TimeSlowMeterManager.Instance.UpdateMeter(timeSlowDurationRemaining, timeSlowMaxDuration);
+        }
         #endregion
     }
 
@@ -166,6 +183,12 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDead)
         {
+            //Pausing
+            if (playerInput.actions["Pause"].WasPerformedThisFrame())
+            {
+                TogglePause();
+                
+            }
             if (playerInput.actions["Left"].WasPerformedThisFrame() && !isTurning)
             {
                 fromDirection = transform.rotation;
@@ -182,6 +205,8 @@ public class PlayerController : MonoBehaviour
             }
             if (playerInput.actions["Jump"].WasPressedThisFrame() && isGrounded) // Jumping
             {
+                Animator anim = playerArms.GetComponent<Animator>();
+                anim.enabled = false;
                 if (jumpBoostIsActive)
                 {
                     rb.AddForce(Vector3.up * 5 * jumpBoostForceMultiplier, ForceMode.VelocityChange);
@@ -214,7 +239,7 @@ public class PlayerController : MonoBehaviour
                 Sounds.PlaySound(Sounds.Sound.Player_Death_Fall);
                 KillPlayer();
             }
-            if (playerInput.actions["Slide"].WasPerformedThisFrame() && rb.velocity.y <= 0 && !isSliding)
+            if (playerInput.actions["Slide"].WasPerformedThisFrame() && rb.velocity.y <= 1 && !isSliding)
             {
                 isSliding = true;
                 stopSlide = false;
@@ -273,6 +298,32 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Animator anim = playerArms.GetComponent<Animator>();
+        if (wonGame)
+        {
+            anim.enabled = false;
+            winTimer -= Time.deltaTime;
+        }
+        if (winTimer < 0)
+        {
+            winTimer = 0;
+            wonGame = false;
+            cameraPan = true;
+            cameraPanTimer = 1f;
+        }
+        if (cameraPan && cameraPanTimer >=0)
+        {
+            cameraPanTimer -= Time.deltaTime;
+            Debug.Log(cameraPanTimer);
+            playerCam.transform.Rotate(Vector3.left, 30.0f * Time.deltaTime);
+        } else if (cameraPanTimer < 0)
+        {
+            cameraPan = false;
+            musicManagerScript.PauseMusic(true);
+            SceneManager.LoadScene("End Cutscene");
+        }
+
+
         rb.AddForce(transform.up * -9.81f, ForceMode.Acceleration); // fake gravity
         if (slidingCD> 0)
         {
@@ -305,6 +356,7 @@ public class PlayerController : MonoBehaviour
             }
             if (!running) {
                 running = true;
+                anim.enabled = true;
                 audioSource.Play();
             }
         }
@@ -326,6 +378,7 @@ public class PlayerController : MonoBehaviour
             {
                 slideInterpolate = 1;
             }
+            anim.enabled = false;
         }
         RaycastHit hit;
         if (!Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
@@ -376,6 +429,16 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Door") && CheckCount_level())
         { 
             other.gameObject.GetComponent<HingedDoor>().OpenDoor();
+            wonGame = true;
+
+            //Pause Arm animations
+            Animator anim = playerArms.GetComponent<Animator>();
+            //anim.SetBool(Grounded, true);
+
+            //Start a timer
+            winTimer = 2;
+
+            KillPlayer();
         }
 
         if (other.gameObject.CompareTag("Obstacle"))
@@ -430,16 +493,27 @@ public class PlayerController : MonoBehaviour
     {
         audioSource.Stop();
         running = false;
+
         if (!isDead) {
             isDead = true;
-            int rand = Random.Range(0,2);
-            if (rand == 0) {
-                Sounds.PlaySound(Sounds.Sound.Player_Death_Grunt1);
-            } else {
-                Sounds.PlaySound(Sounds.Sound.Player_Death_Grunt2);
+            if (!wonGame)
+            {
+                int rand = Random.Range(0, 2);
+                if (rand == 0)
+                {
+                    Sounds.PlaySound(Sounds.Sound.Player_Death_Grunt1);
+                }
+                else
+                {
+                    Sounds.PlaySound(Sounds.Sound.Player_Death_Grunt2);
+                }
             }
+            
         }
-        deathController.SetActive(true);
+        if (!wonGame)
+        {
+            deathController.SetActive(true);
+        }
     }
 
     public void SetPlayerDead(bool alive) 
@@ -471,4 +545,32 @@ public class PlayerController : MonoBehaviour
         jumpBoostIsActive = false;
     }
 
+    public void TogglePause()
+    {
+        if (!isPaused)
+        {
+            Time.timeScale = 0f;
+            isPaused = true;
+            audioSource.Stop();
+        }
+        else if (isPaused)
+        {
+            Time.timeScale = 1.0f;
+            TimeSlowIsActive = false;
+            isPaused = false;
+            if (IsGrounded)
+            {
+                audioSource.Play();
+            }
+        }
+        Sounds.PauseAllAudio(isPaused);
+        musicManagerScript.PauseMusic(isPaused);
+        pMenu.SwapGUI(isPaused);
+        camPhys.SwapDoFMode(isPaused);
+    }
+
+    public void SpeedBoostTrigger()
+    {
+        StartCoroutine(SpeedBoost());
+    }
 }
