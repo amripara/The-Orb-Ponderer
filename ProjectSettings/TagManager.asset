@@ -9,6 +9,7 @@ TagManager:
   - KeyPiece
   - Obstacle
   - Door
+  - Teleporter
   layers:
   - Default
   - TransparentFX
