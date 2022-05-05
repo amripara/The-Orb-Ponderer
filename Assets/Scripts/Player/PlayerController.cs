@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     //Moving forward, jumping
     public float movementSpeed;
     public float speedThreshold;
+    public float strafeSpeed;
     public bool IsGrounded { get => isGrounded; }
     [SerializeField] private bool isGrounded;
 
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour
     public float turnDuration;
     private float timeRemaining;
     private bool isTurning;
+    private bool strafing;
     private Quaternion toDirection;
     private Quaternion fromDirection;
 
@@ -200,6 +202,14 @@ public class PlayerController : MonoBehaviour
             {
                 TogglePause();
                 
+            }
+            if (playerInput.actions["StrafeLeft"].WasPerformedThisFrame() && isGrounded)
+            {
+                // TODO
+            }
+            if (playerInput.actions["StrafeRight"].WasPerformedThisFrame() && isGrounded)
+            {
+                // TODO
             }
             if (playerInput.actions["Left"].WasPerformedThisFrame() && !isTurning)
             {

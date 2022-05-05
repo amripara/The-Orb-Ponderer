@@ -1855,6 +1855,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 964521957}
     - target: {fileID: 612495973828698089, guid: 3e8379f9c67a21a499f9cd0f44e174af, type: 3}
+      propertyPath: strafeSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 612495973828698089, guid: 3e8379f9c67a21a499f9cd0f44e174af, type: 3}
       propertyPath: winTextObject
       value: 
       objectReference: {fileID: 841791123}

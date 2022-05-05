@@ -264,12 +264,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInput: {fileID: 612495973828698095}
   playerCam: {fileID: 0}
+  playerArms: {fileID: 0}
+  tutorialMode: 0
   nextLevelTextObject: {fileID: 0}
   failTextObject: {fileID: 0}
+  TabletStatus: {fileID: 0}
   deathController: {fileID: 8607976401105903749, guid: 5fe5655e60f79094cb56e91d7263380d, type: 3}
   isDead: 0
   movementSpeed: 7
   speedThreshold: 6
+  strafeSpeed: 8
   isGrounded: 0
   slidingSpeed: 5
   slidingCoolDown: 0.3

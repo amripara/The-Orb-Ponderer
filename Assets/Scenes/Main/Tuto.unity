@@ -9917,7 +9917,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You can jump with the 'W' key. Use to jump over obstacles or ledges to
+  m_text: You can jump using 'Spacebar'. Use to jump over obstacles or ledges to
     avoid death!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56e73996c7215dd44b3d9ea50609ca2b, type: 2}
