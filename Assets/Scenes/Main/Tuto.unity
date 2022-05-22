@@ -9783,7 +9783,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: You're always moving forward! Turn left with the 'A' key and turn right
-    with the 'D' key!
+    with the 'D' key! You can also strafe left and right with the 'Q' & 'E' keys.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56e73996c7215dd44b3d9ea50609ca2b, type: 2}
   m_sharedMaterial: {fileID: -6185134862118351830, guid: 56e73996c7215dd44b3d9ea50609ca2b, type: 2}

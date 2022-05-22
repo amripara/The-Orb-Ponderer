@@ -206,10 +206,11 @@ public class PlayerController : MonoBehaviour
             if (playerInput.actions["StrafeLeft"].WasPerformedThisFrame() && isGrounded)
             {
                 // TODO
+                rb.AddForce(transform.right * -1 * strafeSpeed, ForceMode.VelocityChange);
             }
             if (playerInput.actions["StrafeRight"].WasPerformedThisFrame() && isGrounded)
             {
-                // TODO
+                rb.AddForce(transform.right * strafeSpeed, ForceMode.VelocityChange);
             }
             if (playerInput.actions["Left"].WasPerformedThisFrame() && !isTurning)
             {

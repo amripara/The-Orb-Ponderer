@@ -364,17 +364,26 @@ VisualEffect:
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
-  m_ResetSeedOnPlay: 1
+  m_ResetSeedOnPlay: 0
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 0.25
+        m_Name: Radius
+        m_Overridden: 1
+      - m_Value: 50
+        m_Name: FlameRate
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 33.89676, y: 6.5663877, z: 3.194459, w: 1}
+        m_Name: Color
+        m_Overridden: 0
     m_Uint:
       m_Array: []
     m_Int:
@@ -386,7 +395,10 @@ VisualEffect:
     m_Gradient:
       m_Array: []
     m_NamedObject:
-      m_Array: []
+      m_Array:
+      - m_Value: {fileID: 2800000, guid: 0daaabb0107fa93439527a292db0ad95, type: 3}
+        m_Name: FlameTexture
+        m_Overridden: 1
     m_Bool:
       m_Array: []
 --- !u!73398921 &4428720450088731269
