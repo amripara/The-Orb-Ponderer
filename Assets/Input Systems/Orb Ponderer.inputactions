@@ -112,6 +112,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "StrafeLeft",
+                    "type": "Button",
+                    "id": "a59d8648-64d2-4a82-a81b-9bd6a8fa4a73",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StrafeRight",
+                    "type": "Button",
+                    "id": "670bd9f7-cd2b-40e6-8103-fdd213b6227c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -360,7 +378,7 @@
                 {
                     "name": "",
                     "id": "946c469d-fbb8-4435-bb6a-0fde9b6222c0",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -382,7 +400,7 @@
                 {
                     "name": "",
                     "id": "11198528-4611-415c-bfbe-641885fbbe90",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/#(C)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -393,7 +411,7 @@
                 {
                     "name": "",
                     "id": "70161975-44f4-4277-90e5-532ef7ec3802",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/#(V)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -431,6 +449,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f0812426-7252-40b3-9bbd-515bfa5eca30",
+                    "path": "<Keyboard>/#(Q)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StrafeLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c2d40f8-f6f8-49d2-a14c-eeaa39cc1a3e",
+                    "path": "<Keyboard>/#(E)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StrafeRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
